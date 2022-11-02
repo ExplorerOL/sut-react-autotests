@@ -3,7 +3,7 @@ import PageWorkHours from "../sutPages/pageWorkHours";
 
 //const stand_url = require("../fixtures/stand_url.json");
 
-export default class TestAuth{
+export default class TestSuiteAuthotization{
     constructor() {
         this.pageLogin = new PageLogin;
         this.pageWorkHours = new PageWorkHours;

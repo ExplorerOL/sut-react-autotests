@@ -1,4 +1,4 @@
-import TestAuth from "../../sutTestSuites/authorizationSuite.js"
+import TestSuiteAuthotization from "../../sutTestSuites/TestSuiteAuthorization.js"
 
 //файл с набором валидных учетных записей
 const creds_from_file = require("../../fixtures/userCreds.json");
@@ -9,7 +9,7 @@ describe('Тест авторизации пользователей', () => {
         localStorage.setItem('sut/onboardingStatus', '{"LaborCostsOnboardingFinished":true}');
     });
     
-    let testAuth = new TestAuth;
+    let testAuth = new TestSuiteAuthotization;
     let userData;
 
     //-------------- Admin ---------------
@@ -93,7 +93,7 @@ describe('Тест ошибочной авторизации', () => {
         localStorage.setItem('sut/onboardingStatus', '{"LaborCostsOnboardingFinished":true}');
     });
     
-    let testAuth = new TestAuth;
+    let testAuth = new TestSuiteAuthotization;
     let userData;
 
      //-------------- Негативные проверки ---------------
