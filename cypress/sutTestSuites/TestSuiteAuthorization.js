@@ -12,17 +12,6 @@ export default class TestSuiteAuthotization{
     loginUser(userData) {
         this.pageWorkHours = this.pageLogin.doLogin(userData);
 
-        //убрать окно обучалки
-        //cy.contains('h4', "Желаете пройти обучение").parent().contains('Отмена').click();
-            
-        //ожидание ответов на api
-        // cy.intercept('/api/leave-periods*').as('getLeavePeriods');
-        // cy.intercept('/api/labor-reports/*/*').as('getLaborInfo');
-        // cy.wait(['@getLeavePeriods', '@getLaborInfo'], {requestTimeout: 10000}).spread(
-        //             (getUsers, getActivities, getComments) => {
-        //             }
-        // );
-        
         switch (userData.sysRole) {
             case "admin": {
                 this.pageWorkHours.checkAdminElems(userData);
