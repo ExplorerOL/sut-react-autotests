@@ -82,5 +82,5 @@ export default class Sidebar {
     getItemASettings() {
         return cy.xpath(ITEM_ADM_SETTINGS);
     }
-    //действия на странице
+//действия на странице
 }
