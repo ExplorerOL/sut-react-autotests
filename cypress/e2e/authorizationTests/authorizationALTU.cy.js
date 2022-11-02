@@ -3,7 +3,7 @@ import TestSuiteAuthotization from "../../sutTestSuites/TestSuiteAuthorization.j
 //файл с набором валидных учетных записей
 const creds_from_file = require("../../fixtures/userCreds.json");
 
-describe('Тест авторизации пользователей', () => {
+describe('Тесты авторизации пользователей', () => {
 
     beforeEach(() => {
         localStorage.setItem('sut/onboardingStatus', '{"LaborCostsOnboardingFinished":true}');
@@ -87,7 +87,7 @@ describe('Тест авторизации пользователей', () => {
 
 });
  
-describe('Тест ошибочной авторизации', () => {
+describe('Негативные тесты авторизации', () => {
 
     beforeEach(() => {
         localStorage.setItem('sut/onboardingStatus', '{"LaborCostsOnboardingFinished":true}');
