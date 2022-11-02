@@ -1,5 +1,5 @@
 import Header from "./Header";
-import PageWorkHours from "./PageWorkHours";
+import PageWorkHours from "./PageWorkHours/PageWorkHours";
 
 //локаторы
 const LBL_LOGIN_USING_ACCOUNT = "//p[.='Введите свои учётные данные']",

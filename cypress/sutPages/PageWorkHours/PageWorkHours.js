@@ -1,5 +1,5 @@
-import Header from './Header.js';
-import Sidebar from './Sidebar.js';
+import Header from '../Header.js';
+import Sidebar from '../Sidebar.js';
 
 
 export default class PageWorkHours {
