@@ -1,5 +1,5 @@
-import Header from "./header";
-import PageWorkHours from "./pageWorkHours";
+import Header from "./Header";
+import PageWorkHours from "./PageWorkHours";
 
 //const stand_url = require("../fixtures/stand_url.json"),
 

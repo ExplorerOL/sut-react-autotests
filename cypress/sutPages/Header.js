@@ -1,4 +1,4 @@
-import PageLogin from "./pageLogin";
+import PageLogin from "./PageLogin";
 
 const BTN_AUTH_USER = "button[class*='MuiButton-disableElevation']",
     ICON_AUTH_USER = '[data-testid="PersonIcon"]',

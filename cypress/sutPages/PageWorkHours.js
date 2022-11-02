@@ -1,6 +1,6 @@
 //import header from "./header";
-import Header from './header.js';
-import Sidebar from './sidebar.js';
+import Header from './Header.js';
+import Sidebar from './Sidebar.js';
 //import droverAddSickPeriod from "./droverAddSickPeriod";
 
 //const stand_url = require("../fixtures/stand_url.json");
