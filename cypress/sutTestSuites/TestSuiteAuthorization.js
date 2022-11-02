@@ -1,14 +1,12 @@
 import PageLogin from "../sutPages/pageLogin";
 import PageWorkHours from "../sutPages/pageWorkHours";
 
-//const stand_url = require("../fixtures/stand_url.json");
-
 export default class TestSuiteAuthotization{
     constructor() {
         this.pageLogin = new PageLogin;
         this.pageWorkHours = new PageWorkHours;
     }
-
+    //войти в систему с данными пользователя
     loginUser(userData) {
         this.pageWorkHours = this.pageLogin.doLogin(userData);
 
@@ -33,7 +31,7 @@ export default class TestSuiteAuthotization{
         return this.pageWorkHours;
 
     }
-
+    //войти в систему не заполняя логин
     loginWithoutLogin(userData) {
         this.pageLogin.doNavigate()
             .doTypeInPassword(userData.password)
@@ -41,6 +39,7 @@ export default class TestSuiteAuthotization{
             .checkPageElems()
             .checkLblLoginIsRequiredVisible();
     }
+    //войти в систему не заполняя пароль
     loginWithoutPassword(userData) {
         this.pageLogin.doNavigate()
             .doTypeInLogin(userData.username)
@@ -48,6 +47,7 @@ export default class TestSuiteAuthotization{
             .checkPageElems()
             .checkLblPasswordIsRequiredVisible();
     }
+    //войти в систему с неверными логином или паролем
     loginWithWrongCreds(userData) {
         this.pageLogin.doNavigate()
             .doTypeInLogin(userData.username)
@@ -57,10 +57,11 @@ export default class TestSuiteAuthotization{
             .checkLblWrongLoginOrPasswordVisible();
     }
 
-
+    //выйти из системы через UI
     logoutUser() {
         return this.pageWorkHours.header.doLogout();
     }
+    //войти в систему через API
     loginApiUser(userData) {
         return this.pageLogin.doApiLogin(userData);
     }
