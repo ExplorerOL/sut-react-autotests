@@ -48,11 +48,11 @@ export default class PageWorkHours {
         console.log("3" + userData.username);
         this.header.getBtnAuthUser().contains(userData.username);
         this.sidebar.getSidebar().should('contain', 'Главная');
-        this.sidebar.getBtnWorkingHours().should('exist')
-        this.sidebar.getBtnProjects().should('exist');
-        this.sidebar.getBtnUsers().should('exist');
-        this.sidebar.getBtnLeavePlan().should('exist');
-        this.sidebar.getBtnCalendar().should('exist');
+        this.sidebar.getItemWorkingHours().should('exist')
+        this.sidebar.getItemProjects().should('exist');
+        this.sidebar.getItemUsers().should('exist');
+        this.sidebar.getItemLeavePlan().should('exist');
+        this.sidebar.getItemCalendar().should('exist');
         this.getTitleTableWorkReport().should('exist');
         this.getTitleTableLeavePeriods().should('exist');
         return this;        
@@ -60,35 +60,35 @@ export default class PageWorkHours {
     checkAdminElems(userData) {
         this.checkCommonElems(userData);
         this.sidebar.getSidebarListItems().should('have.length', 15);
-        this.sidebar.getBtnAnalytics().should('exist');
-        this.sidebar.getBtnSummaryPlan().should('exist');
+        this.sidebar.getItemAnalytics().should('exist');
+        this.sidebar.getItemSummaryResPlan().should('exist');
         this.sidebar.getAdminBlock().should('contain', 'Администрирование');
-        this.sidebar.getBtnAPrjRoles().should('exist');
-        this.sidebar.getBtnASetPrjRoles().should('exist');
-        this.sidebar.getBtnAUsers().should('exist');
-        this.sidebar.getBtnAProjects().should('exist');
-        this.sidebar.getBtnASettings().should('exist');
+        this.sidebar.getItemAPrjRoles().should('exist');
+        this.sidebar.getItemASetPrjRoles().should('exist');
+        this.sidebar.getItemAUsers().should('exist');
+        this.sidebar.getItemAProjects().should('exist');
+        this.sidebar.getItemASettings().should('exist');
     }
     checkAssistElems(userData) {
         console.log("2" + userData);
         this.checkCommonElems(userData);
         this.sidebar.getSidebarListItems().should('have.length', 9);
-        this.sidebar.getBtnAnalytics().should('exist');
+        this.sidebar.getItemAnalytics().should('exist');
         this.sidebar.getSidebar().should('contain', 'Администрирование');
     }
     checkLeadElems(userData) {
         this.checkCommonElems(userData);
         this.sidebar.getSidebarListItems().should('have.length', 8);
-        this.sidebar.getBtnAnalytics().should('exist');
-        this.sidebar.getBtnSummaryPlan().should('exist');
+        this.sidebar.getItemAnalytics().should('exist');
+        this.sidebar.getItemSummaryResPlan().should('exist');
         this.sidebar.getSidebar().should('not.contain', 'Администрирование');
         
     }
     checkUserElems(userData) {
         this.checkCommonElems(userData);
         this.sidebar.getSidebarListItems().should('have.length', 6);
-        this.sidebar.getBtnAnalytics().should('not.exist');
-        this.sidebar.getBtnSummaryPlan().should('not.exist');
+        this.sidebar.getItemAnalytics().should('not.exist');
+        this.sidebar.getItemSummaryResPlan().should('not.exist');
         this.sidebar.getSidebar().should('not.contain', 'Администрирование');
         
     }
