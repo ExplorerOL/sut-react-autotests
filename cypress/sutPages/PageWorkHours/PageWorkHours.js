@@ -1,6 +1,16 @@
 import Header from '../Header.js';
 import Sidebar from '../Sidebar.js';
 
+//локаторы страницы
+const BTN_ADD_LEAVE_PERIOD = "//button[.='Отсутствие']",
+    BTN_SAVE_WORKING_HOURS = "//button[.='Сохранить']",
+    TABLE_WORK_HOURS_TITLE = "//h4[.='Отчет трудозатрат']",
+    TABLE_LEAVE_PERIODS_TITLE = "//h4[.='Отсутствие']",
+    TABLE_LEAVE_PERIODS = ".ag-center-cols-container",
+    DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD = "//p[.='Больничный']";
+
+
+
 
 export default class PageWorkHours {
     constructor() {
@@ -11,27 +21,27 @@ export default class PageWorkHours {
 //элементы страницы
     //кнопка добавления отсутствий
     getBtnAddLeavePeriods() {
-        return cy.xpath("//button[.='Отсутствие']");
+        return cy.xpath(BTN_ADD_LEAVE_PERIOD);
     }
     //кнопка сохранения рабочих часов
     getBtnSaveWorkingHours() {
-        return cy.xpath("//button[.='Сохранить']");
+        return cy.xpath(BTN_SAVE_WORKING_HOURS);
     }
     //название таблицы трудозатрат
-    getTitleTableWorkReport() {
-        return cy.xpath("//h4[.='Отчет трудозатрат']");
+    getTableWorkReportTitle() {
+        return cy.xpath(TABLE_WORK_HOURS_TITLE);
     }
     //название раздела с отсутствиями
-    getTitleTableLeavePeriods() {
-        return cy.xpath("//h4[.='Отсутствие']");
+    getTableLeavePeriodsTitle() {
+        return cy.xpath(TABLE_LEAVE_PERIODS_TITLE);
     }
     //таблица отсутствий
-    getLeavePeriodsList() {
-        return cy.get(".ag-center-cols-container");
+    getTableLeavePeriods() {
+        return cy.get(TABLE_LEAVE_PERIODS);
     }
     //пункт Больничный отпуск в выпадающем списке
-    getDropItemSickPeriod() {
-        return cy.xpath("//p[.='Больничный']");
+    getDropdownLeavePeriodItemsSickPeriod() {
+        return cy.xpath(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD);
     }
     
 //действия на странице
@@ -44,7 +54,7 @@ export default class PageWorkHours {
     //открыть дровер добавления больничного
     doOpenDroverAddSickPeriod() {
         this.getBtnAddLeavePeriods().click();
-        this.getDropItemSickPeriod().click();
+        this.getDropdownLeavePeriodsSickPeriod().click();
         return droverAddSickPeriod;
     }
     //проверка общих для всех пользователей элементов страницы
@@ -56,8 +66,8 @@ export default class PageWorkHours {
         this.sidebar.getItemUsers().should('exist');
         this.sidebar.getItemLeavePlan().should('exist');
         this.sidebar.getItemCalendar().should('exist');
-        this.getTitleTableWorkReport().should('exist');
-        this.getTitleTableLeavePeriods().should('exist');
+        this.getTableWorkReportTitle().should('exist');
+        this.getTableLeavePeriodsTitle().should('exist');
         return this;        
     }
     //проверка элементов администратора
