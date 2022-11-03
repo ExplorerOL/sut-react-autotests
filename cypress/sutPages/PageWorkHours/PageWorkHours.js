@@ -80,6 +80,9 @@ export default class PageWorkHours {
         this.sidebar.getItemAdmUsers().should('exist');
         this.sidebar.getItemAdmProjects().should('exist');
         this.sidebar.getItemAdmSettings().should('exist');
+        //this.sidebar.getItemAdmIntegrations().should('exist');
+        //this.sidebar.getItemAdmAffiliates().should('exist');
+        //this.sidebar.getItemAdmKkPersonalQualities().should('exist');
     }
     //проверка элементов тех ассистента
     checkAssistElems(userData) {
@@ -88,6 +91,8 @@ export default class PageWorkHours {
         this.sidebar.getSidebarListItems().should('have.length', 9);
         this.sidebar.getItemAnalytics().should('exist');
         this.sidebar.getSidebar().should('contain', 'Администрирование');
+        this.sidebar.getItemAnalytics().should('exist');
+        this.sidebar.getItemAdmLogs().should('exist');
     }
     //проверка элементов лида
     checkLeadElems(userData) {
