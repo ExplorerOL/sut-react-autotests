@@ -10,8 +10,6 @@ const BTN_ADD_LEAVE_PERIOD = "//button[.='Отсутствие']",
     DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD = "//p[.='Больничный']";
 
 
-
-
 export default class PageWorkHours {
     constructor() {
         this.header = new Header;
@@ -77,11 +75,11 @@ export default class PageWorkHours {
         this.sidebar.getItemAnalytics().should('exist');
         this.sidebar.getItemSummaryResPlan().should('exist');
         this.sidebar.getAdminBlock().should('contain', 'Администрирование');
-        this.sidebar.getItemAPrjRoles().should('exist');
-        this.sidebar.getItemASetPrjRoles().should('exist');
-        this.sidebar.getItemAUsers().should('exist');
-        this.sidebar.getItemAProjects().should('exist');
-        this.sidebar.getItemASettings().should('exist');
+        this.sidebar.getItemAdmPrjRoles().should('exist');
+        this.sidebar.getItemAdmSetPrjRoles().should('exist');
+        this.sidebar.getItemAdmUsers().should('exist');
+        this.sidebar.getItemAdmProjects().should('exist');
+        this.sidebar.getItemAdmSettings().should('exist');
     }
     //проверка элементов тех ассистента
     checkAssistElems(userData) {
