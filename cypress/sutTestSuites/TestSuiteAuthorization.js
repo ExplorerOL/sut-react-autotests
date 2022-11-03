@@ -1,4 +1,4 @@
-import PageLogin from "../sutPages/pageLogin";
+import PageLogin from "../sutPages/PageLogin";
 import PageWorkHours from "../sutPages/PageLaborReport/PageLaborReport";
 
 export default class TestSuiteAuthotization{
