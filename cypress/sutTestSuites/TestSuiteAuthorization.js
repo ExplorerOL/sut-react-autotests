@@ -1,5 +1,5 @@
 import PageLogin from "../sutPages/pageLogin";
-import PageWorkHours from "../sutPages/PageWorkHours/PageWorkHours";
+import PageWorkHours from "../sutPages/PageLaborReport/PageLaborReport";
 
 export default class TestSuiteAuthotization{
     constructor() {
