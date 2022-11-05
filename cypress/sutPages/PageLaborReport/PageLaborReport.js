@@ -1,15 +1,12 @@
 import Header from '../Header.js';
 import Sidebar from '../Sidebar.js';
-import DroverAddSickPeriod from './DroverAddLeavePeriod.js';
+import DroverAddLeavePeriod from './DroverAddLeavePeriod.js';
 
 //локаторы страницы
 const ADD_ICON = "[data-testid='AddIcon']",
     ARROW_DROP_DOWN_ID = "[data-testid='ArrowDropDownIcon']",
     CHEVRON_LEFT_ID = "[data-testid='ChevronLeftIcon']",
     CHEVRON_RIGHT_ID = "[data-testid='ChevronRightIcon']",
-
-
-
     
     BTN_ADD_PROJECT_TITLE = 'Проект',
     BTN_ADD_OVERTIME_PERIOD_TITLE = 'Переработка',
@@ -32,6 +29,8 @@ export default class PageWorkHours {
     constructor() {
         this.header = new Header;
         this.sidebar = new Sidebar;
+        this.menuAddLeavePeriod = null;
+        this.droverAddLeavePeriod = new DroverAddLeavePeriod;
         //this.droverAddSickPeriod = new DroverAddSickPeriod();
     }
 
@@ -72,10 +71,6 @@ export default class PageWorkHours {
     getDropdownLeavePeriods() {
 
     }
-    //пункт Больничный отпуск в выпадающем списке
-    getDropdownLeavePeriodItemsSickPeriod() {
-        return cy.xpath(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD);
-    }
     
 //действия на странице
     //перейти на страницу
@@ -84,11 +79,22 @@ export default class PageWorkHours {
         this.header.getBtnAuthUser().should('exist');
         return this;
     }
+    //открыть меню добавления прериода отсутствия
+    doOpenMenuAddLeavePeriod() {
+        this.getBtnAddLeavePeriods().click();
+        this.menuAddLeavePeriod = cy.get(MENU_ADD_LEAVE_PERIOD_ITEMS);
+        this.checkMenuLeavePeriodElems();
+        return this.menuAddLeavePeriod;
+
+    }
     //открыть дровер добавления больничного
     doOpenDroverAddSickPeriod() {
-        this.getBtnAddLeavePeriods().click();
-        this.getDropdownLeavePeriodItemsSickPeriod().click();
-        return this.droverAddSickPeriod;
+        this.menuAddLeavePeriod = this.doOpenMenuAddLeavePeriod();
+        this.menuAddLeavePeriod.contains(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE)
+            .click();
+        //let droverAddSickPeriod = new DroverAddLeavePeriod(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
+        return this.droverAddLeavePeriod.setTitle(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
+
     }
     //проверка общих для всех пользователей элементов страницы
     checkCommonElems(userData) {
@@ -179,6 +185,14 @@ export default class PageWorkHours {
     }
     //проверка элементов меню добавления больничного
     checkMenuLeavePeriodElems() {
+        this.menuAddLeavePeriod.should('contain.text', DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
+        this.menuAddLeavePeriod.should('contain.text', DROPDOWN_LEAVE_PEARIODS_ITEM_PLANNED_PERIOD_TITLE);
+        this.menuAddLeavePeriod.should('contain.text', DROPDOWN_LEAVE_PEARIODS_ITEM_ADMINISTRAVIVE_PERIOD_TITLE);
+        this.menuAddLeavePeriod.should('contain.text', DROPDOWN_LEAVE_PEARIODS_ITEM_MATERNITY_PERIOD_TITLE);
+    }
+    //проверка элементов меню добавления больничного
+    checkMenuLeavePeriodElems() {
+        //let menuAddLeavePeriod = this.doOpenMenuAddLeavePeriod();
         this.menuAddLeavePeriod.should('contain.text', DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
         this.menuAddLeavePeriod.should('contain.text', DROPDOWN_LEAVE_PEARIODS_ITEM_PLANNED_PERIOD_TITLE);
         this.menuAddLeavePeriod.should('contain.text', DROPDOWN_LEAVE_PEARIODS_ITEM_ADMINISTRAVIVE_PERIOD_TITLE);

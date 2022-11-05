@@ -3,16 +3,17 @@ const DROVER_ADD_LEAVE_PERIOD = '.MuiDrawer-paper',
     LBL_CHOOSE_DATES = "Выберите даты",
     LBL_START_DATE = "#mui-1-label",
     LBL_END_DATE = "#mui-2-label",
-    DATAPICKER = "svg[data-test-id='CalendarIcon']",
-    INPUT_START_DATE = "input[id='mui-1']",
-    INPUT_END_DATE = "input[id='mui-1']",
-    BTN_CANCEL = "button[class='button'][type='button']",
-    BTN_SAVE = "button[class='onboarding__save-button'][type='submit']",
+    DATAPICKER = '[data-testid="CalendarIcon"]',
+    BTN_DATAPICKER_DAY = "button[role='gridcell']",
+    INPUT_START_END_DATE = "input[class~='MuiInputBase-inputAdornedEnd']",
+    //INPUT_END_DATE = "input[id='mui-1']",
+    BTN_CANCEL = "button[class~='button'][type='button']",
+    BTN_SAVE = "button[class~='onboarding__save-button'][type='submit']",
     BTN_CLOSE = "[data-testid='ClearIcon']";
 
 export default class DroverAddSickPeriod {
-    constructor(droverTitle) {
-        this.title = droverTitle;
+    constructor() {
+        this.title = null;
     }
 //элементы страницы
     //окно дровера
@@ -22,6 +23,10 @@ export default class DroverAddSickPeriod {
     //название дровера
     getTitle() {
         return cy.contains('h4', this.title);
+    }
+    //задать название дровера
+    setTitle(droverTitle) {
+        this.title = droverTitle;
     }
     //текст выберите даты отпуска
     getDroverText() {
@@ -36,32 +41,61 @@ export default class DroverAddSickPeriod {
         return cy.get(LBL_END_DATE);
     }
     //датапикер начала периода
-    getIconCaledarStartDate() {
-        return cy.get("svg[data-testid='CalendarIcon']").first();
+    getDatapickerStartDate() {
+        return cy.get(DATAPICKER).first();
     }
     //датапикер конца периода
-    getIconCaledarEndDate() {
-        return cy.get("svg[data-testid='CalendarIcon']").last();
+    getDatapickerEndDate() {
+        return cy.get(DATAPICKER).last();
     }
+    //поле ввода даты начала периода
+    getInputStartDate() {
+        return cy.get(INPUT_START_END_DATE).first();
+    }
+    //поле ввода даты конца периода
+    getInputEndDate() {
+        return cy.get(INPUT_START_END_DATE).last();
+    }
+
     //кнопка Отмена
     getBtnCancel() {
-        cy.get(BTN_CANCEL);
+        return cy.get(BTN_CANCEL);
     }
     //кнопка Сохранить
-    getBtnCancel() {
-        cy.get(BTN_CANCEL);
+    getBtnSave() {
+        return cy.get(BTN_SAVE);
     }
     //кнопка крестик Закрыть
     getBtnCancel() {
-        cy.get(BTN_CLOSE);
+        return cy.get(BTN_CLOSE);
+    }
+    doOpenDatapicker(datapicker) {
+        datapicker.click();
+    }
+    doSelectDayOfCurrentMonthFromDatapicker(dayCurrentMonth) {
+        this.doOpenDatapicker(this.getDatapickerStartDate());
+        cy.get(BTN_DATAPICKER_DAY).contains(dayCurrentMonth).click();
+        return this;
+    }
+    doTypeEndDate(date) {
+        this.getInputEndDate().clear().type(date);
+        return this;
+    }
+    doClickBtnSave() {
+        this.getBtnSave().click();
     }
     
-    
     //действия на странице
-    checkDroveElems() {
+    checkElems() {
         this.getTitle().should('exist');
         this.getDroverText().should('exist');
+        this.getLblInputStartData().should('exist');
         this.getLblInputEndData().should('exist');
+        this.getInputStartDate().should('exist');
+        this.getInputEndDate().should('exist');
+        this.getDatapickerStartDate().should('exist');
+        this.getDatapickerEndDate().should('exist');
+        return this;
     }
 }
 
