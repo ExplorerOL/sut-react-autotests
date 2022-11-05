@@ -2,7 +2,8 @@ import Header from "./Header";
 import PageWorkHours from "./PageLaborReport/PageLaborReport";
 
 //локаторы
-const LBL_LOGIN_USING_ACCOUNT = "//p[.='Введите свои учётные данные']",
+const IMG_PAGE_LOGO = "svg[data-testid='LockIcon']",
+    LBL_LOGIN_USING_ACCOUNT = "//p[.='Введите свои учётные данные']",
     INPUT_LOGIN_LABEL = "#mui-1-label",
     INPUT_PASSWORD_LABEL = "#mui-2-label",
     INPUT_LOGIN = "input[name='login']",
@@ -20,6 +21,10 @@ export default class PageLogin {
     }
 
 //элементы страницы
+    //текст приглашения о вводе учетных данных
+    getPageLogo() {
+        return cy.get(IMG_PAGE_LOGO);
+    }
     //текст приглашения о вводе учетных данных
     getLblLoginUsingAccount() {
         return cy.xpath(LBL_LOGIN_USING_ACCOUNT);
@@ -107,6 +112,7 @@ export default class PageLogin {
 //функции проверки страницы
     //проверка наличия элементов на странице
     checkPageElems() {
+        this.getPageLogo();
         this.getLblLoginUsingAccount().should('exist').and('be.visible');
         this.getInputLoginLabel().should('contain', 'Логин');
         this.getInputPasswordLabel().should('contain', 'Пароль');
