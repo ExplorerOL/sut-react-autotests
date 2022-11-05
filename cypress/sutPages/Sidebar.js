@@ -1,25 +1,45 @@
 //локаторы раздела Главная
-const SIDEBAR = "ul[class*='MuiList-root css-1qp5pvt']",
+const SIDEBAR = "ul[class*='MuiList-root']",
     LIST_GENERAL_FUNCTIONS = "//li[@class='MuiListItem-root MuiListItem-gutters css-hsebhl']",
-    ITEM_TITLE_GENERAL_FUNCTIONS = "//li/p[.='Главная']",
-    ITEM_WORKING_HOURS = "//li/a[.='Трудозатраты']",
-    ITEM_PROJECTS = "[href='/projects']",
-    ITEM_USERS = "//li//a[@href='/users']",
-    ITEM_ANALYTYCS = "//li//a[.='Аналитика']",
-    ITEM_SUMMARY_RES_PLAN = "//li//a[.='Сводный ресурсный план']",
-    ITEM_LEAVE_PLAN = "//li//a[.='График отпусков']",
-    ITEM_CALENDAR = "//li//a[.='Производственный календарь']",
-    //локаторы раздела Администрирование
+    TITLE_MAIN_BLOCK = "Главная",
+    TITLE_ADMIN_BLOCK = "Администрирование",
+
+    //ссылки и иконки в элементах раздела сайдбара Главная
+    ITEM_LABOR_REPORT_ICON = "[data-testid='CreateIcon']",
+    ITEM_LABOR_REPORT_LINK = "a[href='/']",
+    ITEM_PROJECTS_ICON = "[data-testid='ViewColumnIcon']",
+    ITEM_PROJECTS_LINK = "a[href='/projects']",
+    ITEM_USERS_ICON = "[data-testid='PeopleAltIcon']",
+    ITEM_USERS_LINK = "a[href='/users']",
+    ITEM_ANALYTICS_ICON = "[data-testid='AssessmentIcon']",
+    ITEM_ANALYTICS_LINK = "a[href='/pivot-table']",
+    ITEM_SUMMARY_RES_PLAN_ICON = "[data-testid='AssessmentIcon']",
+    ITEM_SUMMARY_RES_PLAN_LINK = "a[href='/resource-plan-table']",
+    ITEM_PLAN_LEAVE_PERIOD_ICON = "[data-testid='PhotoIcon']",
+    ITEM_PLAN_LEAVE_PERIOD_LINK = "a[href='/vacation-schedule']",
+    ITEM_PROD_CALENDAR_ICON = "[data-testid='EventIcon']",
+    ITEM_PROD_CALENDAR_LINK = "a[href='/calendar']",
+
+    //ссылки и иконки в элементах раздела сайдбара Администрирование
     LIST_ADM_FUNCTIONS = 'li[class="MuiListItem-root MuiListItem-gutters css-l93goy"]',
-    ITEM_ADM_PROJECT_ROLES = "//li//p[.='Проектные роли']",
-    ITEM_ADM_SYS_ROLE_ASSIGN = "//li//p[.='Назначение системных ролей']",
-    ITEM_ADM_USERS = "//li//a[@href='/admin/users']",
-    ITEM_ADM_PROJECTS = "//li//p[.='Проекты']",
-    ITEM_ADM_SETTINGS = "//li//a[.='Настройки']",
-    ITEM_ADM_INTEGRATIONS = "//li//a[.='Интеграции']",
-    ITEM_ADM_LOGS = "//li//a[.='Логирование']",
-    ITEM_ADM_AFFILIATES = "//li//a[.='Филиалы']",
-    ITEM_ADM_PERSONAL_QUALITIES = "//li//a[.='Филиалы']";
+    ITEM_ADM_PRJ_ROLES_ICON = "[data-testid='FolderSharedIcon']",
+    ITEM_ADM_PRJ_ROLES_LINK = "a[href='/admin/project-roles']",
+    ITEM_ADM_ASSIGN_SYS_ROLES_ICON = "[data-testid='CreateNewFolderIcon']",
+    ITEM_ADM_ASSIGN_SYS_ROLES_LINK = "a[href='/admin/user-roles']",
+    ITEM_ADM_USERS_ICON = "[data-testid='PeopleAltIcon']",
+    ITEM_ADM_USERS_LINK = "a[href='/admin/users']",
+    ITEM_ADM_PROJECTS_ICON = "[data-testid='ViewColumnIcon']",
+    ITEM_ADM_PROJECTS_LINK = "a[href='/admin/projects']",
+    ITEM_ADM_SETTINGS_ICON = "[data-testid='SettingsIcon']",
+    ITEM_ADM_SETTINGS_LINK = "a[href='/admin/settings']",
+    ITEM_ADM_INTEGRATIONS_ICON = "[data-testid='WidgetsIcon']",
+    ITEM_ADM_INTEGRATIONS_LINK = "a[href='/admin/integrations']",
+    ITEM_ADM_LOGGING_ICON = "[data-testid='BuildIcon']",
+    ITEM_ADM_LOGGING_LINK = "a[href='/admin/logging']";
+
+    // ITEM_ADM_LOGS = "//li//a[.='Логирование']",
+    // ITEM_ADM_AFFILIATES = "//li//a[.='Филиалы']",
+    // ITEM_ADM_PERSONAL_QUALITIES = "//li//a[.='Филиалы']";
 
 export default class Sidebar {
 
@@ -29,80 +49,100 @@ export default class Sidebar {
         return cy.get(SIDEBAR);
     }
     //список элементов сайдбара
-    getSidebarListItems() {
+    getSidebarItems() {
         return cy.get(SIDEBAR).find('li');
     }
-    getGeneralBlock() {
-        return cy.get(LIST_GENERAL_FUNCTIONS);
+    getMainBlockTitle() {
+        return cy.get(SIDEBAR).contains(TITLE_MAIN_BLOCK);
     }
     //элемент Трудозатраты
-    getItemWorkingHours() {
-        return cy.xpath(ITEM_WORKING_HOURS);
+    getItemLaborReport() {
+        return cy.get(ITEM_LABOR_REPORT_LINK).find(ITEM_LABOR_REPORT_ICON);
     }
     //элемент Проекты
     getItemProjects() {
-        return cy.get(ITEM_PROJECTS);
+        return cy.get(ITEM_PROJECTS_LINK).find(ITEM_PROJECTS_ICON);
     }
     //элемент Пользователи
     getItemUsers() {
-        return cy.xpath(ITEM_USERS);
+        return cy.get(ITEM_USERS_LINK).find(ITEM_USERS_ICON);
     }
     //элемент Аналитика
     getItemAnalytics() {
-        return cy.xpath(ITEM_ANALYTYCS);
+        return cy.get(ITEM_ANALYTICS_LINK).find(ITEM_ANALYTICS_ICON);
     }
     //элемент Сводный ресурсный план
     getItemSummaryResPlan() {
-        return cy.xpath(ITEM_SUMMARY_RES_PLAN);
+        return cy.get(ITEM_SUMMARY_RES_PLAN_LINK).find(ITEM_SUMMARY_RES_PLAN_ICON);
     }
     //элемент График отпусков
     getItemLeavePlan() {
-        return cy.xpath(ITEM_LEAVE_PLAN);
+        return cy.get(ITEM_PLAN_LEAVE_PERIOD_LINK).find(ITEM_PLAN_LEAVE_PERIOD_ICON);
     }
     //элемент Произовдственный календать
     getItemCalendar() {
-        return cy.xpath(ITEM_CALENDAR);
+        return cy.get(ITEM_PROD_CALENDAR_LINK).find(ITEM_PROD_CALENDAR_ICON);
     }
 
+    
     //блок элементов администратора
-    getAdminBlock() {
-        return cy.get(LIST_ADM_FUNCTIONS);
+    getAdminBlockTitle() {
+         return cy.get(SIDEBAR).contains(TITLE_ADMIN_BLOCK);
     }
     //элемент Проектные роли
     getItemAdmPrjRoles() {
-        return cy.xpath(ITEM_ADM_PROJECT_ROLES);
+        return cy.get(ITEM_ADM_PRJ_ROLES_LINK).find(ITEM_ADM_PRJ_ROLES_ICON);
     }
     //элемент Назначение проектных ролей
-    getItemAdmSetPrjRoles() {
-        return cy.xpath(ITEM_ADM_SYS_ROLE_ASSIGN);
+    getItemAdmAssignSysRoles() {
+        return cy.get(ITEM_ADM_ASSIGN_SYS_ROLES_LINK).find(ITEM_ADM_ASSIGN_SYS_ROLES_ICON);
     }
     //элемент АПользователи
     getItemAdmUsers() {
-        return cy.xpath(ITEM_ADM_USERS);
+        return cy.get(ITEM_ADM_USERS_LINK).find(ITEM_ADM_USERS_ICON);
     }
     //элемент АПроекты
     getItemAdmProjects() {
-        return cy.xpath(ITEM_ADM_PROJECTS);
+        return cy.get(ITEM_ADM_PROJECTS_LINK).find(ITEM_ADM_PROJECTS_ICON);
     }
     //элемент Настройки
     getItemAdmSettings() {
-        return cy.xpath(ITEM_ADM_SETTINGS);
+        return cy.get(ITEM_ADM_SETTINGS_LINK).find(ITEM_ADM_SETTINGS_ICON);
     }
     //элемент Интеграции
     getItemAdmIntegrations() {
-        return cy.xpath(ITEM_ADM_INTEGRATIONS);
+        return cy.get(ITEM_ADM_INTEGRATIONS_LINK).find(ITEM_ADM_INTEGRATIONS_ICON);
     }
-    //элемент Филиалы
-    getItemAdmAffiliates() {
-        return cy.xpath(ITEM_ADM_AFFILIATES);
-    }
-    //элемент КК Справочники
-    getItemAdmKkPersonalQualities() {
-        return cy.xpath(ITEM_ADM_PERSONAL_QUALITIES);
-    }
+    // //элемент Филиалы
+    // getItemAdmAffiliates() {
+    //     return cy.xpath(ITEM_ADM_AFFILIATES);
+    // }
+    // //элемент КК Справочники
+    // getItemAdmKkPersonalQualities() {
+    //     return cy.xpath(ITEM_ADM_PERSONAL_QUALITIES);
+    // }
     //элемент Логгирование
     getItemAdmLogs() {
-        return cy.xpath(ITEM_ADM_LOGS);
+        return cy.get(ITEM_ADM_LOGGING_LINK).find(ITEM_ADM_LOGGING_ICON);
     }
 //действия на странице
+    //проверка отсутствия элементов адрминистратора в сайдбаре
+    checkAdminElemsNotPresentLU() {
+        this.getAdminBlockTitle().should('not.exist');
+        cy.get(ITEM_ADM_PRJ_ROLES_LINK).should('not.exist');
+        cy.get(ITEM_ADM_ASSIGN_SYS_ROLES_LINK).should('not.exist');
+        cy.get(ITEM_ADM_USERS_LINK).should('not.exist');
+        cy.get(ITEM_ADM_PROJECTS_LINK).should('not.exist');
+        cy.get(ITEM_ADM_SETTINGS_LINK).should('not.exist');
+        cy.get(ITEM_ADM_INTEGRATIONS_LINK).should('not.exist');
+    }
+    //проверка отсутствия элементов адрминистратора у тех. ассиста
+    checkAdminElemsNotPresentT() {
+        cy.get(ITEM_ADM_PRJ_ROLES_LINK).should('not.exist');
+        cy.get(ITEM_ADM_ASSIGN_SYS_ROLES_LINK).should('not.exist');
+        cy.get(ITEM_ADM_USERS_LINK).should('not.exist');
+        cy.get(ITEM_ADM_PROJECTS_LINK).should('not.exist');
+        cy.get(ITEM_ADM_SETTINGS_LINK).should('not.exist');
+        cy.get(ITEM_ADM_INTEGRATIONS_LINK).should('not.exist');
+    }
 }

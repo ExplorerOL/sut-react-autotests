@@ -16,7 +16,7 @@ export default class TestSuiteAuthotization{
             break;
             }
             case "tech_assist": {
-                this.pageWorkHours.checkAssistElems(userData);
+                this.pageWorkHours.checkTechAssistElems(userData);
             break;
             }
             case "lead": {
