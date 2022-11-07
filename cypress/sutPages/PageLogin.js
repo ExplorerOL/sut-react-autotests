@@ -89,25 +89,6 @@ export default class PageLogin {
         this.doNavigate().doTypeInLogin(userData.username).doTypeInPassword(userData.password).doCLickBtnLogin();
         return this.pageWorkHours;
     }
-    //процедура логина через API
-    doApiLogin(userData) {
-        cy.request({
-            method: 'POST',
-            url: '/api/login',
-            body: {
-                "login": userData.username,
-                "password": userData.password
-            }
-        }).then( function (response) {
-            console.log(response.body);
-            expect(response.status).to.eq(200);
-            expect(response.body.token).to.not.be.null;
-            cy.setCookie('auth_token', response.body.token);
-            console.log("POST /api/login answer was received");
-            return this.pageWorkHours;
-        });
-        
-    }
 
 //функции проверки страницы
     //проверка наличия элементов на странице

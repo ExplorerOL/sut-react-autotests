@@ -1,4 +1,5 @@
 import TestSuiteAuthotization from "../../sutTestSuites/TestSuiteAuthorization.js"
+import * as API from "../../support/API/apiFunctions";
 
 //файл с набором валидных учетных записей
 const creds_from_file = require("../../fixtures/userCreds.json");
@@ -23,7 +24,7 @@ describe('Тесты авторизации пользователей', () => {
     it('Выход из системы Admin', () => {
         userData = creds_from_file.admin;
         //логин через API
-        testAuth.loginApiUser(userData);
+        API.doLogin(userData);
         testAuth.pageWorkHours.doNavigate();
 
         //выход из системы через UI
@@ -40,7 +41,7 @@ describe('Тесты авторизации пользователей', () => {
 
     it('Выход из системы Tech assist', () => {
         //логин через API
-        testAuth.loginApiUser(userData);
+        API.doLogin(userData);
         testAuth.pageWorkHours.doNavigate();
 
         //выход из системы через UI
@@ -57,7 +58,7 @@ describe('Тесты авторизации пользователей', () => {
 
     it('Выход из системы Tech assist', () => {
         //логин через API
-        testAuth.loginApiUser(userData);
+        API.doLogin(userData);
         testAuth.pageWorkHours.doNavigate();
 
         //выход из системы через UI
@@ -77,7 +78,7 @@ describe('Тесты авторизации пользователей', () => {
     it('Выход из системы User', () => {
         userData = creds_from_file.user;
         //логин через API
-        testAuth.loginApiUser(userData);
+        API.doLogin(userData);
         testAuth.pageWorkHours.doNavigate();
 
         //выход из системы через UI

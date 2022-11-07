@@ -61,10 +61,4 @@ export default class TestSuiteAuthotization{
     logoutUser() {
         return this.pageWorkHours.header.doLogout();
     }
-    //войти в систему через API
-    loginApiUser(userData) {
-        return this.pageLogin.doApiLogin(userData);
-    }
-
-
 }
