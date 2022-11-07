@@ -37,15 +37,4 @@ export default class Header {
         let pageLogin = new PageLogin;
         return pageLogin;
     }
-    //выход из системы API
-    doLogoutApi() {
-        cy.request({
-            method: 'DELETE',
-            url: stand_url.url + '/api/login/' + cy.getCookie('auth_token'),
-        }).then(function (response) {
-            expect(response.status).to.eq(204);
-            let pageLogin = new PageLogin;
-            return pageLogin;
-        });
-    }
 }

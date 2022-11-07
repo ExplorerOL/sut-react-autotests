@@ -1,4 +1,4 @@
-//процедура логина через API
+//логина через API
 export function doLogin(userData) {
     cy.request({
         method: 'POST',
@@ -13,6 +13,19 @@ export function doLogin(userData) {
         expect(response.body.token).to.not.be.null;
         cy.setCookie('auth_token', response.body.token);
         console.log("POST /api/login answer was received");
+    }).then(function (response) {
+        return response;
+    });
+        
+}
+
+//выход из системы API
+export function doLogin(userData) {
+    cy.request({
+        method: 'DELETE',
+        url: '/api/login/' + cy.getCookie('auth_token'),
+    }).then(function (response) {
+        expect(response.status).to.eq(204);
     }).then(function (response) {
         return response;
     });
