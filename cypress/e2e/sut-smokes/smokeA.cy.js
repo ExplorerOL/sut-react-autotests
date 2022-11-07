@@ -39,7 +39,7 @@ describe('Смоук тест Admin', () => {
         before(() => {
             localStorage.setItem('sut/onboardingStatus', '{"LaborCostsOnboardingFinished":true}');
             API.doLogin(adminData);
-            testAuth.pageWorkHours.doNavigate();
+            testAuth.pageWorkHours.doNavigate().doWaitForApiResponse();
         });
 
         it.only('3.1.2.1. Добавление больничного/отпуска со страницы трудозатрат администратор.A', () => {

@@ -36,6 +36,8 @@ export default class TestSuiteLeavePeriod{
 
     //добавить Больничный отпуск
     addSickPeriod(startDate, endDate) {
+        //проверяем, что больничные не проставлены
+        this.pageLaborReport.checkNoLeavePeriodPresent();
         this.pageLaborReport.doOpenDroverAddSickPeriod();
         this.pageLaborReport.droverAddLeavePeriod
             .checkElems()

@@ -85,7 +85,8 @@ export default class DroverAddSickPeriod {
         this.getBtnSave().click();
     }
     
-    //действия на странице
+//действия на странице
+    //проверка элементов дровера
     checkElems() {
         this.getTitle().should('exist');
         return this;
