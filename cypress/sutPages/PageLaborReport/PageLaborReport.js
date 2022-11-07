@@ -3,7 +3,7 @@ import Sidebar from '../Sidebar.js';
 import DroverAddSickPeriod from './DroverAddLeavePeriod.js';
 
 //локаторы страницы
-const ADD_ICON_ID = "[data-testid='AddIcon']",
+const ADD_ICON = "[data-testid='AddIcon']",
     ARROW_DROP_DOWN_ID = "[data-testid='ArrowDropDownIcon']",
     CHEVRON_LEFT_ID = "[data-testid='ChevronLeftIcon']",
     CHEVRON_RIGHT_ID = "[data-testid='ChevronRightIcon']",
@@ -20,7 +20,11 @@ const ADD_ICON_ID = "[data-testid='AddIcon']",
     TABLE_WORK_HOURS_TITLE = "//h4[.='Отчет трудозатрат']",
     TABLE_LEAVE_PERIODS_TITLE = "//h4[.='Отсутствие']",
     TABLE_LEAVE_PERIODS = ".ag-center-cols-container",
-    DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD = "//p[.='Больничный']";
+    MENU_ADD_LEAVE_PERIOD_ITEMS = "ul[role='menu'][class~='MuiMenu-list']",
+    DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE = "Больничный",
+    DROPDOWN_LEAVE_PEARIODS_ITEM_PLANNED_PERIOD_TITLE = "Ежегодный отпуск",
+    DROPDOWN_LEAVE_PEARIODS_ITEM_ADMINISTRAVIVE_PERIOD_TITLE = "Административный отпуск",
+    DROPDOWN_LEAVE_PEARIODS_ITEM_MATERNITY_PERIOD_TITLE = "Декретный отпуск";
 //*[@id="__next"]/div/div/div[1]/div[1]/div[2]/div/div[3]/button[2]/span[1]/svg
 ///html/body/div[1]/div/div/div[1]/div[1]/div[2]/div/div[3]/button[2]/span[1]/svg
 
@@ -34,15 +38,16 @@ export default class PageWorkHours {
 //элементы страницы
     //кнопка добавления переработок
     getBtnAddOvertimePeriods() {
-        return cy.contains('button', BTN_ADD_OVERTIME_PERIOD_TITLE).find(ADD_ICON_ID);
+        //return cy.contains('button', BTN_ADD_OVERTIME_PERIOD_TITLE).find(ADD_ICON);
+        return cy.contains('button', BTN_ADD_OVERTIME_PERIOD_TITLE).find(ADD_ICON);
     }
     //кнопка добавления отсутствий
     getBtnAddLeavePeriods() {
-        return cy.contains('button', BTN_ADD_LEAVE_PERIOD_TITLE).find(ADD_ICON_ID);
+        return cy.contains('button', BTN_ADD_LEAVE_PERIOD_TITLE).find(ADD_ICON);
     }
     //кнопка добавления на проект
     getBtnAddProject() {
-        return cy.contains('button', BTN_ADD_PROJECT_TITLE).find(ADD_ICON_ID);
+        return cy.contains('button', BTN_ADD_PROJECT_TITLE).find(ADD_ICON);
     }
     //кнопка сохранения рабочих часов
     getBtnSaveWorkingHours() {
@@ -128,7 +133,7 @@ export default class PageWorkHours {
 
         this.sidebar.getAdminBlockTitle().should('exist');
         this.sidebar.getItemAdmLogs().should('exist');
-        this.sidebar.checkAdminElemsNotPresentT();
+        //this.sidebar.checkAdminElemsNotPresentT();
     }
     //проверка элементов лида
     checkLeadElems(userData) {
@@ -138,7 +143,7 @@ export default class PageWorkHours {
         this.sidebar.getItemSummaryResPlan().should('exist');
         this.sidebar.getSidebar().should('not.contain', 'Администрирование');
 
-        this.sidebar.checkAdminElemsNotPresentLU();
+        //this.sidebar.checkAdminElemsNotPresentLU();
         
     }
     //проверка элементов пользователя
@@ -147,7 +152,37 @@ export default class PageWorkHours {
         this.sidebar.getSidebarItems().should('have.length', 6);
         this.sidebar.getAdminBlockTitle().should('not.exist');
 
-        this.sidebar.checkAdminElemsNotPresentLU();
+        this.checkAdminElemsNotPresentLU();
+    }
+    //проверка отсутствия элементов адрминистратора в сайдбаре
+    checkAdminElemsNotPresentLU() {
+        this.sidebar.getAdminBlockTitle().should('not.exist');
+        this.sidebar.getItemAnalytics().should('not.exist');
+        this.sidebar.getItemSummaryResPlan().should('not.exist');
+        this.sidebar.getItemAdmPrjRoles().should('not.exist');
+        this.sidebar.getItemAdmAssignSysRoles().should('not.exist');
+        this.sidebar.getItemAdmUsers().should('not.exist');
+        this.sidebar.getItemAdmProjects().should('not.exist');
+        this.sidebar.getItemAdmSettings().should('not.exist');
+        this.sidebar.getItemAdmIntegrations().should('not.exist');
+    }
+    //проверка отсутствия элементов адрминистратора у тех. ассиста
+    checkAdminElemsNotPresentT() {
+        this.sidebar.getItemAnalytics().should('not.exist');
+        this.sidebar.getItemSummaryResPlan().should('not.exist');
+        this.sidebar.getItemAdmPrjRoles().should('not.exist');
+        this.sidebar.getItemAdmAssignSysRoles().should('not.exist');
+        this.sidebar.getItemAdmUsers().should('not.exist');
+        this.sidebar.getItemAdmProjects().should('not.exist');
+        this.sidebar.getItemAdmSettings().should('not.exist');
+        this.sidebar.getItemAdmIntegrations().should('not.exist');
+    }
+    //проверка элементов меню добавления больничного
+    checkMenuLeavePeriodElems() {
+        this.menuAddLeavePeriod.should('contain.text', DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
+        this.menuAddLeavePeriod.should('contain.text', DROPDOWN_LEAVE_PEARIODS_ITEM_PLANNED_PERIOD_TITLE);
+        this.menuAddLeavePeriod.should('contain.text', DROPDOWN_LEAVE_PEARIODS_ITEM_ADMINISTRAVIVE_PERIOD_TITLE);
+        this.menuAddLeavePeriod.should('contain.text', DROPDOWN_LEAVE_PEARIODS_ITEM_MATERNITY_PERIOD_TITLE);
     }
 }
 
