@@ -20,7 +20,7 @@ export function doLogin(userData) {
 }
 
 //выход из системы API
-export function doLogin(userData) {
+export function doLogout(userData) {
     cy.request({
         method: 'DELETE',
         url: '/api/login/' + cy.getCookie('auth_token'),

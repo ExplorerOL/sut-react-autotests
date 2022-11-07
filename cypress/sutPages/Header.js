@@ -37,4 +37,9 @@ export default class Header {
         let pageLogin = new PageLogin;
         return pageLogin;
     }
+//проверка общих для всех пользователей элементов страницы
+    checkElems(userData) {
+        this.getBtnAuthUser().contains(userData.username);
+        return this;        
+    }
 }
