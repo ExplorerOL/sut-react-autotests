@@ -6,5 +6,6 @@ cypress/downloads
 cypress/videos
 package-lock.json
 cypress.config.js
+package.json
 cypress/fixtures/userCreds.json
 cypress/vda
