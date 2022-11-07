@@ -10,26 +10,11 @@ export default class TestSuiteAuthotization{
     loginUser(userData) {
         this.pageWorkHours = this.pageLogin.doLogin(userData);
 
-        switch (userData.sysRole) {
-            case "admin": {
-                this.pageWorkHours.checkAdminElems(userData);
-            break;
-            }
-            case "tech_assist": {
-                this.pageWorkHours.checkTechAssistElems(userData);
-            break;
-            }
-            case "lead": {
-                this.pageWorkHours.checkLeadElems(userData);
-            break;
-            }
-            case "user": {
-                this.pageWorkHours.checkUserElems(userData);
-            break;
-            }
-        }
-        return this.pageWorkHours;
+        this.pageWorkHours.header.checkElems(userData);
+        this.pageWorkHours.sidebar.checkElems(userData);
+        this.pageWorkHours.checkElems();
 
+        return this.pageWorkHours;
     }
     //войти в систему не заполняя логин
     loginWithoutLogin(userData) {

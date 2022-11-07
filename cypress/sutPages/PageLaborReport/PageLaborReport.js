@@ -84,105 +84,26 @@ export default class PageWorkHours {
         this.header.getBtnAuthUser().should('exist');
         return this;
     }
-    //открыть дровер добавления больничного
-    doOpenDroverAddSickPeriod() {
+    //открыть меню добавления прериода отсутствия
+    doOpenMenuAddLeavePeriod() {
         this.getBtnAddLeavePeriods().click();
-        this.getDropdownLeavePeriodItemsSickPeriod().click();
-        return this.droverAddSickPeriod;
+        this.menuAddLeavePeriod = cy.get(MENU_ADD_LEAVE_PERIOD_ITEMS);
+        this.checkMenuLeavePeriodElems();
+        return this.menuAddLeavePeriod;
+
     }
-    //проверка общих для всех пользователей элементов страницы
-    checkCommonElems(userData) {
-        this.header.getBtnAuthUser().contains(userData.username);
-        this.sidebar.getMainBlockTitle().should('exist');
-        this.sidebar.getItemLaborReport().should('exist')
-        this.sidebar.getItemProjects().should('exist');
-        this.sidebar.getItemUsers().should('exist');
-        this.sidebar.getItemLeavePlan().should('exist');
-        this.sidebar.getItemCalendar().should('exist');
+    //проверка элементов на странице
+    checkElems() {
         this.getTableWorkReportTitle().should('exist');
         this.getTableLeavePeriodsTitle().should('exist');
-        this.getBtnAddProject().should('exist');
-        this.getBtnAddOvertimePeriods().should('exist');
-        this.getBtnAddLeavePeriods().should('exist');
-        this.getBtnCancelWorkingHours().should('exist');
-        this.getBtnSaveWorkingHours().should('exist');
-        return this;        
     }
-    //проверка элементов администратора
-    checkAdminElems(userData) {
-        this.checkCommonElems(userData);
-        this.sidebar.getSidebarItems().should('have.length', 15);
-        this.sidebar.getAdminBlockTitle().should('exist');
-        this.sidebar.getItemAnalytics().should('exist');
-        this.sidebar.getItemSummaryResPlan().should('exist');
-        this.sidebar.getItemAdmPrjRoles().should('exist');
-        this.sidebar.getItemAdmAssignSysRoles().should('exist');
-        this.sidebar.getItemAdmUsers().should('exist');
-        this.sidebar.getItemAdmProjects().should('exist');
-        this.sidebar.getItemAdmSettings().should('exist');
-        this.sidebar.getItemAdmIntegrations().should('exist');
-        //this.sidebar.getItemAdmAffiliates().should('exist');
-        //this.sidebar.getItemAdmKkPersonalQualities().should('exist');
-    }
-    //проверка элементов тех ассистента
-    checkTechAssistElems(userData) {
-        this.checkCommonElems(userData);
-        this.sidebar.getSidebarItems().should('have.length', 9);
-        this.sidebar.getItemAnalytics().should('exist');
-        this.sidebar.getItemAnalytics().should('exist');
-
-        this.sidebar.getAdminBlockTitle().should('exist');
-        this.sidebar.getItemAdmLogs().should('exist');
-        //this.sidebar.checkAdminElemsNotPresentT();
-    }
-    //проверка элементов лида
-    checkLeadElems(userData) {
-        this.checkCommonElems(userData);
-        this.sidebar.getSidebarItems().should('have.length', 8);
-        this.sidebar.getItemAnalytics().should('exist');
-        this.sidebar.getItemSummaryResPlan().should('exist');
-        this.sidebar.getSidebar().should('not.contain', 'Администрирование');
-
-        //this.sidebar.checkAdminElemsNotPresentLU();
-        
-    }
-    //проверка элементов пользователя
-    checkUserElems(userData) {
-        this.checkCommonElems(userData);
-        this.sidebar.getSidebarItems().should('have.length', 6);
-        this.sidebar.getAdminBlockTitle().should('not.exist');
-
-        this.checkAdminElemsNotPresentLU();
-    }
-    //проверка отсутствия элементов адрминистратора в сайдбаре
-    checkAdminElemsNotPresentLU() {
-        this.sidebar.getAdminBlockTitle().should('not.exist');
-        this.sidebar.getItemAnalytics().should('not.exist');
-        this.sidebar.getItemSummaryResPlan().should('not.exist');
-        this.sidebar.getItemAdmPrjRoles().should('not.exist');
-        this.sidebar.getItemAdmAssignSysRoles().should('not.exist');
-        this.sidebar.getItemAdmUsers().should('not.exist');
-        this.sidebar.getItemAdmProjects().should('not.exist');
-        this.sidebar.getItemAdmSettings().should('not.exist');
-        this.sidebar.getItemAdmIntegrations().should('not.exist');
-    }
-    //проверка отсутствия элементов адрминистратора у тех. ассиста
-    checkAdminElemsNotPresentT() {
-        this.sidebar.getItemAnalytics().should('not.exist');
-        this.sidebar.getItemSummaryResPlan().should('not.exist');
-        this.sidebar.getItemAdmPrjRoles().should('not.exist');
-        this.sidebar.getItemAdmAssignSysRoles().should('not.exist');
-        this.sidebar.getItemAdmUsers().should('not.exist');
-        this.sidebar.getItemAdmProjects().should('not.exist');
-        this.sidebar.getItemAdmSettings().should('not.exist');
-        this.sidebar.getItemAdmIntegrations().should('not.exist');
-    }
-    //проверка элементов меню добавления больничного
-    checkMenuLeavePeriodElems() {
-        this.menuAddLeavePeriod.should('contain.text', DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
-        this.menuAddLeavePeriod.should('contain.text', DROPDOWN_LEAVE_PEARIODS_ITEM_PLANNED_PERIOD_TITLE);
-        this.menuAddLeavePeriod.should('contain.text', DROPDOWN_LEAVE_PEARIODS_ITEM_ADMINISTRAVIVE_PERIOD_TITLE);
-        this.menuAddLeavePeriod.should('contain.text', DROPDOWN_LEAVE_PEARIODS_ITEM_MATERNITY_PERIOD_TITLE);
+    //открыть дровер добавления больничного
+    doOpenDroverAddSickPeriod() {
+        this.menuAddLeavePeriod = this.doOpenMenuAddLeavePeriod();
+        this.menuAddLeavePeriod.contains(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE)
+            .click();
+        //let droverAddSickPeriod = new DroverAddLeavePeriod(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
+        return this.droverAddLeavePeriod.setTitle(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
     }
 }
 
