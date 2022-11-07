@@ -83,7 +83,6 @@ export default class PageWorkHours {
     doOpenMenuAddLeavePeriod() {
         this.getBtnAddLeavePeriods().click();
         this.menuAddLeavePeriod = cy.get(MENU_ADD_LEAVE_PERIOD_ITEMS);
-        this.checkMenuLeavePeriodElems();
         return this.menuAddLeavePeriod;
 
     }
