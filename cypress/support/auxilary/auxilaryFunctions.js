@@ -1,5 +1,5 @@
 export function calculateLeavePeriodStartDayForPicking() {
-    return 10;
+    return 2;
     }
 export function calculateLeavePeriodEndDateForTyping() {
     //число месяца для начала отсутствия

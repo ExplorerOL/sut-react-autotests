@@ -26,11 +26,14 @@ export default class TestSuiteLeavePeriod{
     addSickPeriod(startDate, endDate) {
         //проверяем, что больничные не проставлены
         this.pageLaborReport.checkNoLeavePeriodPresent();
+
         this.pageLaborReport.doOpenDroverAddSickPeriod();
         this.pageLaborReport.droverAddLeavePeriod
             .doSelectDayOfCurrentMonthFromDatapicker(this.startLeaveDay)
             .doTypeEndDate(this.endLeaveDate)
             .doClickBtnSave();
+        
+        this.pageLaborReport.checkLeavePeriodWasAdded();
 
         // this.droverAddLeavePeriod.getInputStartDate();
         // this.droverAddLeavePeriod.getDatapickerStartDate();

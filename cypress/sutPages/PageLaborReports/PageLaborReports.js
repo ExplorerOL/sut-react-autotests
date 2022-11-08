@@ -22,9 +22,16 @@ const ADD_ICON = "[data-testid='AddIcon']",
     DROPDOWN_LEAVE_PEARIODS_ITEM_PLANNED_PERIOD_TITLE = "Ежегодный отпуск",
     DROPDOWN_LEAVE_PEARIODS_ITEM_ADMINISTRAVIVE_PERIOD_TITLE = "Административный отпуск",
     DROPDOWN_LEAVE_PEARIODS_ITEM_MATERNITY_PERIOD_TITLE = "Декретный отпуск",
+    //элементы таблицы Трудозатраты
+    TABLE_LABOR_REPORTS_ROWS_WITH_PROJECTS = 'div[class~="ag-row-first"][row-id="row-group-0"]',
+    TABLE_LABOR_REPORTS_ROW_TOTAL = 'div[class~="ag-floating-bottom-viewport"][role="presentation"]',
+    TABLE_LABOR_REPORTS_FIRST_ROW_1DAY_CELL = 'div[class~="ag-row-first"][row-id="row-group-0"] div[class~="ag-cell-value"][role="gridcell"][aria-colindex="3"]',
+    TABLE_LABOR_REPORTS_FIRST_ROW_CELLS = 'div[row-id="row-group-0"] div[class~="cell-dates"][role="gridcell"]',
+    TABLE_LABOR_REPORTS_TOTAL_ROW_CELLS = 'div[row-index="b-0"][row-id="b-0"] div[class~="cell-dates"][role="gridcell"]',
 
-    TABLE_LABOR_REPORTS_ROWS_WITH_PROJECTS = 'div[class~="ag-center-cols-clipper"][role="presentation"]',
-    TABLE_LABOR_REPORTS_ROW_TOTAL = 'div[class~="ag-floating-bottom-viewport"][role="presentation"]';
+    //элементы таблицы Отсутствия
+    TABLE_LEAVE_PERIODS_LAST_LEAVE_TYPE_CELL = 'div[role="gridcell"][col-id="0"]';
+
 
 export default class PageWorkHours {
     constructor() {
@@ -124,7 +131,18 @@ export default class PageWorkHours {
         return this.droverAddLeavePeriod.setTitle(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
     }
     checkNoLeavePeriodPresent() {
-        this.getTableLaborReportRowsWithProjects().children().should('not.have.text', "Б")
+        //this.getTableLaborReportRowsWithProjects().children().contains('[role="gridcell"]', "Б").should('not.exist');
+        cy.get(TABLE_LABOR_REPORTS_FIRST_ROW_CELLS).should('have.text', "");
+        cy.get(TABLE_LABOR_REPORTS_TOTAL_ROW_CELLS).should('have.text', "");
+
+        cy.get(TABLE_LEAVE_PERIODS_LAST_LEAVE_TYPE_CELL).should('not.exist');
+    }
+    checkLeavePeriodWasAdded() {
+        //this.getTableLaborReportRowsWithProjects().children().contains('[role="gridcell"]', "Б").should('not.exist');
+        cy.get(TABLE_LABOR_REPORTS_FIRST_ROW_CELLS).should('have.text', "БББББББББББББББББББ");
+        cy.get(TABLE_LABOR_REPORTS_TOTAL_ROW_CELLS).should('have.text', "БББББББББББББББББББ");
+
+        cy.get(TABLE_LEAVE_PERIODS_LAST_LEAVE_TYPE_CELL).should('have.text', "Больничный");
     }
 }
 
