@@ -1,5 +1,5 @@
 import Header from "./Header";
-import PageWorkHours from "./PageLaborReport/PageLaborReport";
+import PageWorkHours from "./PageLaborReports/PageLaborReports";
 
 //локаторы
 const IMG_PAGE_LOGO = "svg[data-testid='LockIcon']",

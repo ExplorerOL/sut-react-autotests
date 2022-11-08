@@ -1,5 +1,5 @@
 //import PageLogin from "../sutPages/pageLogin";
-import PageLaborReport from "../sutPages/PageLaborReport/PageLaborReport";
+import PageLaborReport from "../sutPages/PageLaborReports/PageLaborReports";
 //import DroverAddLeavePeriod from "../sutPages/PageLaborReport/DroverAddLeavePeriod";
 
 export default class TestSuiteLeavePeriod{
