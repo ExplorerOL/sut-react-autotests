@@ -40,7 +40,6 @@ export default class TestSuiteLeavePeriod{
         this.pageLaborReport.checkNoLeavePeriodPresent();
         this.pageLaborReport.doOpenDroverAddSickPeriod();
         this.pageLaborReport.droverAddLeavePeriod
-            .checkElems()
             .doSelectDayOfCurrentMonthFromDatapicker(this.startLeaveDay)
             .doTypeEndDate(this.endLeaveDate)
             .doClickBtnSave();
