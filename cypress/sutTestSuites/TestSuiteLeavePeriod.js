@@ -1,29 +1,17 @@
 //import PageLogin from "../sutPages/pageLogin";
 import PageLaborReport from "../sutPages/PageLaborReports/PageLaborReports";
+import * as auxFunctions from "../support/auxilary/auxilaryFunctions";
 //import DroverAddLeavePeriod from "../sutPages/PageLaborReport/DroverAddLeavePeriod";
 
 export default class TestSuiteLeavePeriod{
     constructor() {
         this.pageLaborReport = new PageLaborReport;
         //this.droverAddLeavePeriod = new DroverAddLeavePeriod;
-        this.startLeaveDay = null;
-        this.endLeaveDay = null;
-        this.calculateLeavePeriodDatesForTest();
+        this.startLeaveDay = auxFunctions.calculateLeavePeriodStartDayForPicking();
+        this.endLeaveDate = auxFunctions.calculateLeavePeriodEndDateForTyping();
+        
     }
 
-    calculateLeavePeriodDatesForTest() {
-        //число месяца для начала отсутствия
-        this.startLeaveDay = 2;
-        //число месяца для конца отсутствия = текущей дате
-        let now = new Date();
-        // console.log(now);
-        // console.log(now.getMonth());
-        let nowDay = now.getDate() >1 ? ("0" + (now.getDate())).slice(-2) : 2;
-        let nowMonth = ("0" + (now.getMonth() + 1)).slice(-2);
-        let nowYear = now.getFullYear()
-        this.endLeaveDate = nowDay + "." + nowMonth + "." + nowYear;
-        console.log(this.endLeaveDate);
-    }
     clearAllLeavewPeriods() {
         
     }
