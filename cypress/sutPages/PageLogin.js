@@ -1,5 +1,5 @@
 import Header from "./Header";
-import PageWorkHours from "./PageLaborReports/PageLaborReports";
+import PageLaborReports from "./PageLaborReports/PageLaborReports";
 
 //локаторы
 const IMG_PAGE_LOGO = "svg[data-testid='LockIcon']",
@@ -11,16 +11,16 @@ const IMG_PAGE_LOGO = "svg[data-testid='LockIcon']",
     BTN_LOGIN = "button[class*='MuiButton-containedSecondary'][type='submit']",
     LBL_LOGIN_REQUIRED = "p[id='mui-1-helper-text']",
     LBL_PASSWORD_REQUIRED = "p[id='mui-2-helper-text']",
-    LBL_WRONG_LOGIN_OR_PASSWORD = 'Неверный',
-    STYLE_LBL_WRONG_LOGIN_OR_PASSWORD = '.css-ifn6vo';
+    LBL_WRONG_LOGIN_OR_PASSWORD = "Неверный",
+    STYLE_LBL_WRONG_LOGIN_OR_PASSWORD = ".css-ifn6vo";
 
 export default class PageLogin {
     constructor() {
-        this.header = new Header;
-        this.pageWorkHours = new PageWorkHours;
+        this.header = new Header();
+        this.pageLaborReports = new PageLaborReports();
     }
 
-//элементы страницы
+    //элементы страницы
     //текст приглашения о вводе учетных данных
     getPageLogo() {
         return cy.get(IMG_PAGE_LOGO);
@@ -50,19 +50,19 @@ export default class PageLogin {
         return cy.get(BTN_LOGIN);
     }
     //надпись логин обязателен
-    getLblLoginIsRequired(){
+    getLblLoginIsRequired() {
         return cy.get(LBL_LOGIN_REQUIRED);
     }
     //надпись пароль обязателен
-    getLblPasswordIsRequired(){
+    getLblPasswordIsRequired() {
         return cy.get(LBL_PASSWORD_REQUIRED);
     }
     //надпись логин или пароль неверные
-    getLblWrongLoginOrPassword(){
+    getLblWrongLoginOrPassword() {
         return cy.contains(STYLE_LBL_WRONG_LOGIN_OR_PASSWORD, LBL_WRONG_LOGIN_OR_PASSWORD);
     }
 
-//действия на странице
+    //действия на странице
     //открыть страницу и проверить наличие ее элементов
     doNavigate() {
         cy.visit("/login");
@@ -86,36 +86,37 @@ export default class PageLogin {
     }
     //процедура логина через UI
     doLogin(userData) {
-        this.doNavigate().doTypeInLogin(userData.username).doTypeInPassword(userData.password).doCLickBtnLogin();
-        return this.pageWorkHours;
+        this.doNavigate()
+            .doTypeInLogin(userData.username)
+            .doTypeInPassword(userData.password)
+            .doCLickBtnLogin();
+        return this.pageLaborReports;
     }
 
-//функции проверки страницы
+    //функции проверки страницы
     //проверка наличия элементов на странице
     checkPageElems() {
         this.getPageLogo();
-        this.getLblLoginUsingAccount().should('exist').and('be.visible');
-        this.getInputLoginLabel().should('contain', 'Логин');
-        this.getInputPasswordLabel().should('contain', 'Пароль');
-        this.header.getBtnAuthUser().should('not.exist');
-        cy.location('protocol').should('eq', 'https:');
+        this.getLblLoginUsingAccount().should("exist").and("be.visible");
+        this.getInputLoginLabel().should("contain", "Логин");
+        this.getInputPasswordLabel().should("contain", "Пароль");
+        this.header.getBtnAuthUser().should("not.exist");
+        cy.location("protocol").should("eq", "https:");
         return this;
     }
     //проверка видимости надписи об обязательности ввода логина
     checkLblLoginIsRequiredVisible() {
-        this.getLblLoginIsRequired().should('have.text','Поле обязательно').and('be.visible');
+        this.getLblLoginIsRequired().should("have.text", "Поле обязательно").and("be.visible");
         return this;
     }
     //проверка видимости надписи об обязательности ввода пароля
     checkLblPasswordIsRequiredVisible() {
-        this.getLblPasswordIsRequired().should('have.text','Поле обязательно').and('be.visible');
+        this.getLblPasswordIsRequired().should("have.text", "Поле обязательно").and("be.visible");
         return this;
-
     }
     //проверка видимости надписи о неверном логине или пароле
     checkLblWrongLoginOrPasswordVisible() {
-        this.getLblWrongLoginOrPassword().should('be.visible');
+        this.getLblWrongLoginOrPassword().should("be.visible");
         return this;
-        
     }
 }

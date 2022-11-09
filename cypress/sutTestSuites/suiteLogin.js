@@ -1,24 +1,25 @@
 import PageLogin from "../sutPages/PageLogin";
-import PageWorkHours from "../sutPages/PageLaborReports/PageLaborReports";
+import PageLaborReports from "../sutPages/PageLaborReports/PageLaborReports";
 
-export default class TestSuiteAuthotization{
+export default class TestSuiteAuthotization {
     constructor() {
-        this.pageLogin = new PageLogin;
-        this.pageWorkHours = new PageWorkHours;
+        this.pageLogin = new PageLogin();
+        this.pageLaborReports = new PageLaborReports();
     }
     //войти в систему с данными пользователя
     loginUser(userData) {
-        this.pageWorkHours = this.pageLogin.doLogin(userData);
+        this.pageLaborReports = this.pageLogin.doLogin(userData);
 
-        this.pageWorkHours.header.checkElems(userData);
-        this.pageWorkHours.sidebar.checkElems(userData);
-        this.pageWorkHours.checkElems();
+        this.pageLaborReports.header.checkElems(userData);
+        this.pageLaborReports.sidebar.checkElems(userData);
+        this.pageLaborReports.checkElems();
 
-        return this.pageWorkHours;
+        return this.pageLaborReports;
     }
     //войти в систему не заполняя логин
     loginWithoutLogin(userData) {
-        this.pageLogin.doNavigate()
+        this.pageLogin
+            .doNavigate()
             .doTypeInPassword(userData.password)
             .doCLickBtnLogin()
             .checkPageElems()
@@ -26,7 +27,8 @@ export default class TestSuiteAuthotization{
     }
     //войти в систему не заполняя пароль
     loginWithoutPassword(userData) {
-        this.pageLogin.doNavigate()
+        this.pageLogin
+            .doNavigate()
             .doTypeInLogin(userData.username)
             .doCLickBtnLogin()
             .checkPageElems()
@@ -34,7 +36,8 @@ export default class TestSuiteAuthotization{
     }
     //войти в систему с неверными логином или паролем
     loginWithWrongCreds(userData) {
-        this.pageLogin.doNavigate()
+        this.pageLogin
+            .doNavigate()
             .doTypeInLogin(userData.username)
             .doTypeInPassword(userData.password)
             .doCLickBtnLogin()
@@ -44,6 +47,13 @@ export default class TestSuiteAuthotization{
 
     //выйти из системы через UI
     logoutUser() {
-        return this.pageWorkHours.header.doLogout();
+        return this.pageLaborReports.header.doLogout();
+    }
+
+    //вспомогательные методы проверок
+    //проверка имени пользователя в правом верхнем улгу страницы
+    checkSidebarElems(userData) {
+        this.pageLaborReports.getBtnAuthUser().contains(userData.username);
+        return this;
     }
 }

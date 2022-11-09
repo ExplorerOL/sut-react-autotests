@@ -24,7 +24,7 @@ describe("Тесты авторизации пользователей", () => {
         userData = creds_from_file.admin;
         //логин через API
         API.doLogin(userData);
-        testAuth.pageWorkHours.doNavigate();
+        testAuth.pageLaborReports.doNavigate();
 
         //выход из системы через UI
         testAuth.logoutUser().checkPageElems();
@@ -40,7 +40,7 @@ describe("Тесты авторизации пользователей", () => {
     it("Выход из системы Tech assist", () => {
         //логин через API
         API.doLogin(userData);
-        testAuth.pageWorkHours.doNavigate();
+        testAuth.pageLaborReports.doNavigate();
 
         //выход из системы через UI
         testAuth.logoutUser().checkPageElems();
@@ -56,7 +56,7 @@ describe("Тесты авторизации пользователей", () => {
     it("Выход из системы Tech assist", () => {
         //логин через API
         API.doLogin(userData);
-        testAuth.pageWorkHours.doNavigate();
+        testAuth.pageLaborReports.doNavigate();
 
         //выход из системы через UI
         testAuth.logoutUser().checkPageElems();
@@ -74,7 +74,7 @@ describe("Тесты авторизации пользователей", () => {
         userData = creds_from_file.user;
         //логин через API
         API.doLogin(userData);
-        testAuth.pageWorkHours.doNavigate();
+        testAuth.pageLaborReports.doNavigate();
 
         //выход из системы через UI
         testAuth.logoutUser().checkPageElems();
