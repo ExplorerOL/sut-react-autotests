@@ -7,7 +7,7 @@ const BTN_AUTH_USER = "button[class*='MuiButton-disableElevation']",
     AUTH_USER_MENU_LOGOUT = "//li[.='Выйти']";
 
 export default class Header {
-//элементы страницы
+    //элементы страницы
     //кнопка с именем пользователя в правом верхнем углу
     getBtnAuthUser() {
         return cy.get(BTN_AUTH_USER);
@@ -25,8 +25,7 @@ export default class Header {
         return cy.xpath(AUTH_USER_MENU_LOGOUT);
     }
 
-
-//действия на странице
+    //действия на странице
     //выход из системы через UI
     doLogout() {
         cy.log("Выход из системы");
@@ -34,12 +33,7 @@ export default class Header {
             this.getIconAuthUser().click();
             this.getAuthUserMenuLogout().click();
         }
-        let pageLogin = new PageLogin;
+        let pageLogin = new PageLogin();
         return pageLogin;
-    }
-//проверка общих для всех пользователей элементов страницы
-    checkElems(userData) {
-        this.getBtnAuthUser().contains(userData.username);
-        return this;        
     }
 }

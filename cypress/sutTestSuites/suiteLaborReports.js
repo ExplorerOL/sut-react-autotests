@@ -3,56 +3,62 @@ import PageLaborReport from "../sutPages/PageLaborReports/PageLaborReports";
 import * as auxFunctions from "../support/auxilary/auxilaryFunctions";
 //import DroverAddLeavePeriod from "../sutPages/PageLaborReport/DroverAddLeavePeriod";
 
-export default class TestSuiteLeavePeriod{
+export default class SuiteLaborReports {
     constructor() {
-        this.pageLaborReport = new PageLaborReport;
+        this.pageLaborReports = new PageLaborReport();
         //this.droverAddLeavePeriod = new DroverAddLeavePeriod;
         this.startLeaveDay = auxFunctions.calculateLeavePeriodStartDayForPicking();
         this.endLeaveDate = auxFunctions.calculateLeavePeriodEndDateForTyping();
-        
     }
 
-    clearAllLeavewPeriods() {
-        
-    }
-    ensureOneLeavePeriod() {
-
-    }
-    ensureActiveProjectsPresent() {
-        
-    }
+    clearAllLeavewPeriods() {}
+    ensureOneLeavePeriod() {}
+    ensureActiveProjectsPresent() {}
 
     //добавить Больничный отпуск
     addSickPeriod(startDate, endDate) {
         //проверяем, что больничные не проставлены
-        this.pageLaborReport.checkNoLeavePeriodPresent();
+        this.checkNoLeavePeriodPresent();
 
-        this.pageLaborReport.doOpenDroverAddSickPeriod();
-        this.pageLaborReport.droverAddLeavePeriod
+        this.pageLaborReports.doOpenDroverAddSickPeriod();
+        this.pageLaborReports.droverAddLeavePeriod
             .doSelectDayOfCurrentMonthFromDatapicker(this.startLeaveDay)
             .doTypeEndDate(this.endLeaveDate)
             .doClickBtnSave();
-        
-        this.pageLaborReport.checkLeavePeriodWasAdded();
+
+        this.checkLeavePeriodWasAdded();
 
         // this.droverAddLeavePeriod.getInputStartDate();
         // this.droverAddLeavePeriod.getDatapickerStartDate();
     }
     //добавить Ежегодный отпуск
-    addPlanedLeavePeriod(startDate, endDate) {
-
-    }
+    addPlanedLeavePeriod(startDate, endDate) {}
     //добавить Административный отпуск
-    addAdministrativePeriod(startDate, endDate) {
-
-    }
+    addAdministrativePeriod(startDate, endDate) {}
     //добавить Декретный отпуск
-    addMaternityPeriod(startDate, endDate) {
-
-    }
+    addMaternityPeriod(startDate, endDate) {}
     //удалить последний отпуск
-    addMostRecentLeavePeriod(startDate, endDate) {
+    addMostRecentLeavePeriod(startDate, endDate) {}
 
+    //вспомогательные методы проверок
+    checkNoLeavePeriodPresent() {
+        //this.getTableLaborReportRowsWithProjects().children().contains('[role="gridcell"]', "Б").should('not.exist');
+        this.pageLaborReports.getTableLaborReportFirstPrjRowCells().should("have.text", "");
+        this.pageLaborReports.getTableLaborReportRowTotalCells().should("have.text", "");
+
+        this.pageLaborReports.getTableLeavePeriodsFirstLeaveTypeCell().should("not.exist");
     }
+    checkLeavePeriodWasAdded() {
+        //this.getTableLaborReportRowsWithProjects().children().contains('[role="gridcell"]', "Б").should('not.exist');
+        this.pageLaborReports
+            .getTableLaborReportFirstPrjRowCells()
+            .should("have.text", "БББББББББББББББББББ");
+        this.pageLaborReports
+            .getTableLaborReportRowTotalCells()
+            .should("have.text", "БББББББББББББББББББ");
 
+        this.pageLaborReports
+            .getTableLeavePeriodsFirstLeaveTypeCell()
+            .should("have.text", "Больничный");
+    }
 }

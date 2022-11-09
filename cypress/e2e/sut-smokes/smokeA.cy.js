@@ -1,5 +1,5 @@
-import TestSuiteAuthotization from "../../sutTestSuites/TestSuiteAuthorization.js";
-import TestSuiteLeavePeriod from "../../sutTestSuites/TestSuiteLeavePeriod.js";
+import SuitLogin from "../../sutTestSuites/SuiteLogin.js";
+import SuiteLaborReports from "../../sutTestSuites/SuiteLaborReports.js";
 import * as API from "../../support/API/apiFunctions";
 
 //файл с набором валидных учетных записей
@@ -11,32 +11,34 @@ describe("Смоук тест Admin", () => {
     });
 
     describe("Авторизация Admin", () => {
-        let adminData = creds_from_file.admin;
-        let testAuth = new TestSuiteAuthotization();
+        let userCreds = creds_from_file.admin;
+        let suitLogin = new SuitLogin();
 
         it("Вход в систему Admin", () => {
             //логин через UI
-            testAuth.loginUser(adminData).doNavigate();
+            suitLogin.loginUser(userCreds).doNavigate();
         });
 
         it("Выход из системы Admin", () => {
             //логин через API
-            API.doLogin(adminData);
-            testAuth.pageLaborReports.doNavigate();
+            API.doLogin(userCreds);
+            suitLogin.pageLaborReports.doNavigate();
 
             //выход из системы через UI
-            testAuth.pageLaborReports.header.doLogout();
+            suitLogin.pageLaborReports.header.doLogout();
         });
     });
 
     describe("3.1.2 Отсутствия Admin", () => {
-        let adminData = creds_from_file.admin;
-        let testAuth = new TestSuiteAuthotization();
-        let suitLeavePeriod = new TestSuiteLeavePeriod();
+        let userCreds = creds_from_file.admin;
+        let testAuth = new SuitLogin();
+        let suitLaborReports = new SuiteLaborReports();
+        let userInfo;
 
         before(() => {
             localStorage.setItem("sut/onboardingStatus", '{"LaborCostsOnboardingFinished":true}');
-            API.doLogin(adminData);
+            userInfo = API.doLogin(userCreds);
+            console.log(userInfo);
             testAuth.pageLaborReports.doNavigate().doWaitForApiResponse();
         });
 

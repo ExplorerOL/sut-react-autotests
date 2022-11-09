@@ -1,4 +1,4 @@
-import TestSuiteAuthotization from "../../sutTestSuites/suiteLogin.js";
+import SuitLogin from "../../sutTestSuites/suiteLogin.js";
 import * as API from "../../support/API/apiFunctions";
 
 //файл с набором валидных учетных записей
@@ -9,57 +9,56 @@ describe("Тесты авторизации пользователей", () => {
         localStorage.setItem("sut/onboardingStatus", '{"LaborCostsOnboardingFinished":true}');
     });
 
-    let testAuth = new TestSuiteAuthotization();
+    let suitLogin = new SuitLogin();
     let userData;
 
     //-------------- Admin ---------------
     it("Вход в систему Admin", () => {
         userData = creds_from_file.admin;
         //логин через UI
-        //console.log(userData);
-        testAuth.loginUser(userData);
+        suitLogin.doLoginUserAndCheckVisibleElems(userData);
     });
 
     it("Выход из системы Admin", () => {
         userData = creds_from_file.admin;
         //логин через API
         API.doLogin(userData);
-        testAuth.pageLaborReports.doNavigate();
+        suitLogin.pageLaborReports.doNavigate();
 
         //выход из системы через UI
-        testAuth.logoutUser().checkPageElems();
+        suitLogin.doLogoutAndCheckVisibleElems();
     });
 
     //-------------- Tech Assist ---------------
     it("Вход в систему Tech assist", () => {
         userData = creds_from_file.tech_assist;
         //логин через UI
-        testAuth.loginUser(userData);
+        suitLogin.doLoginUserAndCheckVisibleElems(userData);
     });
 
     it("Выход из системы Tech assist", () => {
         //логин через API
         API.doLogin(userData);
-        testAuth.pageLaborReports.doNavigate();
+        suitLogin.pageLaborReports.doNavigate();
 
         //выход из системы через UI
-        testAuth.logoutUser().checkPageElems();
+        suitLogin.doLogoutAndCheckVisibleElems();
     });
 
     //-------------- Lead ---------------
     it("Вход в систему Lead", () => {
         userData = creds_from_file.lead;
         //логин через UI
-        testAuth.loginUser(userData);
+        suitLogin.doLoginUserAndCheckVisibleElems(userData);
     });
 
-    it("Выход из системы Tech assist", () => {
+    it("Выход из системы Lead", () => {
         //логин через API
         API.doLogin(userData);
-        testAuth.pageLaborReports.doNavigate();
+        suitLogin.pageLaborReports.doNavigate();
 
         //выход из системы через UI
-        testAuth.logoutUser().checkPageElems();
+        suitLogin.doLogoutAndCheckVisibleElems();
     });
 
     //-------------- User ---------------
@@ -67,17 +66,17 @@ describe("Тесты авторизации пользователей", () => {
         userData = creds_from_file.user;
         //логин через UI
         console.log(userData);
-        testAuth.loginUser(userData);
+        suitLogin.doLoginUserAndCheckVisibleElems(userData);
     });
 
     it("Выход из системы User", () => {
         userData = creds_from_file.user;
         //логин через API
         API.doLogin(userData);
-        testAuth.pageLaborReports.doNavigate();
+        suitLogin.pageLaborReports.doNavigate();
 
         //выход из системы через UI
-        testAuth.logoutUser().checkPageElems();
+        suitLogin.doLogoutAndCheckVisibleElems();
     });
 });
 
@@ -86,32 +85,28 @@ describe("Негативные тесты авторизации", () => {
         localStorage.setItem("sut/onboardingStatus", '{"LaborCostsOnboardingFinished":true}');
     });
 
-    let testAuth = new TestSuiteAuthotization();
+    let testAuth = new SuitLogin();
     let userData;
 
     //-------------- Негативные проверки ---------------
     it("Вход с пустым логином", () => {
         userData = creds_from_file.user;
         //логин через UI
-        console.log(userData);
-        testAuth.loginWithoutLogin(userData);
+        testAuth.doLoginWithoutLogin(userData);
     });
     it("Вход с пустым паролем", () => {
         userData = creds_from_file.user;
         //логин через UI
-        console.log(userData);
-        testAuth.loginWithoutPassword(userData);
+        testAuth.doLoginWithoutPassword(userData);
     });
     it("Вход с неправильным логином", () => {
         userData = creds_from_file.wrong_login_user;
         //логин через UI
-        console.log(userData);
-        testAuth.loginWithWrongCreds(userData);
+        testAuth.doLoginWithWrongCreds(userData);
     });
     it("Вход с неправильным паролем", () => {
         userData = creds_from_file.wrong_password_user;
         //логин через UI
-        console.log(userData);
-        testAuth.loginWithWrongCreds(userData);
+        testAuth.doLoginWithWrongCreds(userData);
     });
 });

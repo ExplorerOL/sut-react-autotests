@@ -17,7 +17,6 @@ const IMG_PAGE_LOGO = "svg[data-testid='LockIcon']",
 export default class PageLogin {
     constructor() {
         this.header = new Header();
-        this.pageLaborReports = new PageLaborReports();
     }
 
     //элементы страницы
@@ -66,7 +65,6 @@ export default class PageLogin {
     //открыть страницу и проверить наличие ее элементов
     doNavigate() {
         cy.visit("/login");
-        this.checkPageElems();
         return this;
     }
     //нажать кнопку Логин
@@ -86,37 +84,8 @@ export default class PageLogin {
     }
     //процедура логина через UI
     doLogin(userData) {
-        this.doNavigate()
-            .doTypeInLogin(userData.username)
-            .doTypeInPassword(userData.password)
-            .doCLickBtnLogin();
-        return this.pageLaborReports;
-    }
-
-    //функции проверки страницы
-    //проверка наличия элементов на странице
-    checkPageElems() {
-        this.getPageLogo();
-        this.getLblLoginUsingAccount().should("exist").and("be.visible");
-        this.getInputLoginLabel().should("contain", "Логин");
-        this.getInputPasswordLabel().should("contain", "Пароль");
-        this.header.getBtnAuthUser().should("not.exist");
-        cy.location("protocol").should("eq", "https:");
-        return this;
-    }
-    //проверка видимости надписи об обязательности ввода логина
-    checkLblLoginIsRequiredVisible() {
-        this.getLblLoginIsRequired().should("have.text", "Поле обязательно").and("be.visible");
-        return this;
-    }
-    //проверка видимости надписи об обязательности ввода пароля
-    checkLblPasswordIsRequiredVisible() {
-        this.getLblPasswordIsRequired().should("have.text", "Поле обязательно").and("be.visible");
-        return this;
-    }
-    //проверка видимости надписи о неверном логине или пароле
-    checkLblWrongLoginOrPasswordVisible() {
-        this.getLblWrongLoginOrPassword().should("be.visible");
-        return this;
+        this.doTypeInLogin(userData.username).doTypeInPassword(userData.password).doCLickBtnLogin();
+        let pageLaborReports = new PageLaborReports();
+        return pageLaborReports;
     }
 }

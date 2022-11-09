@@ -26,7 +26,7 @@ const ADD_ICON = "[data-testid='AddIcon']",
         'div[class~="ag-floating-bottom-viewport"][role="presentation"]',
     TABLE_LABOR_REPORTS_FIRST_ROW_1DAY_CELL =
         'div[class~="ag-row-first"][row-id="row-group-0"] div[class~="ag-cell-value"][role="gridcell"][aria-colindex="3"]',
-    TABLE_LABOR_REPORTS_FIRST_ROW_CELLS =
+    TABLE_LABOR_REPORTS_FIRST_PRJ_ROW_CELLS =
         'div[row-id="row-group-0"] div[class~="cell-dates"][role="gridcell"]',
     TABLE_LABOR_REPORTS_TOTAL_ROW_CELLS =
         'div[row-index="b-0"][row-id="b-0"] div[class~="cell-dates"][role="gridcell"]',
@@ -69,12 +69,12 @@ export default class PageLaborReports {
         return cy.xpath(TABLE_WORK_HOURS_TITLE);
     }
     //строки с проектами таблицы турдозатрат
-    getTableLaborReportRowsWithProjects() {
-        return cy.get(TABLE_LABOR_REPORTS_ROWS_WITH_PROJECTS);
+    getTableLaborReportFirstPrjRowCells() {
+        return cy.get(TABLE_LABOR_REPORTS_FIRST_PRJ_ROW_CELLS);
     }
     //строка Итого таблицы трудозатрат
-    getTableLaborReportRowTotal() {
-        return cy.get(TABLE_LABOR_REPORTS_ROW_TOTAL);
+    getTableLaborReportRowTotalCells() {
+        return cy.get(TABLE_LABOR_REPORTS_TOTAL_ROW_CELLS);
     }
     //название раздела с отсутствиями
     getTableLeavePeriodsTitle() {
@@ -84,7 +84,10 @@ export default class PageLaborReports {
     getTableLeavePeriods() {
         return cy.get(TABLE_LEAVE_PERIODS);
     }
-    getDropdownLeavePeriods() {}
+    //таблица отсутствий
+    getTableLeavePeriodsFirstLeaveTypeCell() {
+        return cy.get(TABLE_LEAVE_PERIODS_LAST_LEAVE_TYPE_CELL);
+    }
 
     //действия на странице
     //перейти на страницу
@@ -112,30 +115,12 @@ export default class PageLaborReports {
         this.menuAddLeavePeriod = cy.get(MENU_ADD_LEAVE_PERIOD_ITEMS);
         return this.menuAddLeavePeriod;
     }
-    //проверка элементов на странице
-    checkElems() {
-        this.getTableWorkReportTitle().should("exist");
-        this.getTableLeavePeriodsTitle().should("exist");
-    }
+
     //открыть дровер добавления больничного
     doOpenDroverAddSickPeriod() {
         this.menuAddLeavePeriod = this.doOpenMenuAddLeavePeriod();
         this.menuAddLeavePeriod.contains(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE).click();
         //let droverAddSickPeriod = new DroverAddLeavePeriod(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
         return this.droverAddLeavePeriod.setTitle(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
-    }
-    checkNoLeavePeriodPresent() {
-        //this.getTableLaborReportRowsWithProjects().children().contains('[role="gridcell"]', "Б").should('not.exist');
-        cy.get(TABLE_LABOR_REPORTS_FIRST_ROW_CELLS).should("have.text", "");
-        cy.get(TABLE_LABOR_REPORTS_TOTAL_ROW_CELLS).should("have.text", "");
-
-        cy.get(TABLE_LEAVE_PERIODS_LAST_LEAVE_TYPE_CELL).should("not.exist");
-    }
-    checkLeavePeriodWasAdded() {
-        //this.getTableLaborReportRowsWithProjects().children().contains('[role="gridcell"]', "Б").should('not.exist');
-        cy.get(TABLE_LABOR_REPORTS_FIRST_ROW_CELLS).should("have.text", "БББББББББББББББББББ");
-        cy.get(TABLE_LABOR_REPORTS_TOTAL_ROW_CELLS).should("have.text", "БББББББББББББББББББ");
-
-        cy.get(TABLE_LEAVE_PERIODS_LAST_LEAVE_TYPE_CELL).should("have.text", "Больничный");
     }
 }
