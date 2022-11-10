@@ -123,4 +123,24 @@ export default class PageLaborReports {
         //let droverAddSickPeriod = new DroverAddLeavePeriod(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
         return this.droverAddLeavePeriod.setTitle(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
     }
+    //открыть дровер добавления ежегодного отпуска
+    doOpenDroverAddPlannedLeavePeriod() {
+        this.menuAddLeavePeriod = this.doOpenMenuAddLeavePeriod();
+        this.menuAddLeavePeriod.contains(DROPDOWN_LEAVE_PEARIODS_ITEM_PLANNED_PERIOD_TITLE).click();
+        //let droverAddSickPeriod = new DroverAddLeavePeriod(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
+        return this.droverAddLeavePeriod.setTitle(
+            DROPDOWN_LEAVE_PEARIODS_ITEM_PLANNED_PERIOD_TITLE
+        );
+    }
+    //открыть дровер добавления административного отпуска
+    doOpenDroverAddAdministrativeLeavePeriod() {
+        this.menuAddLeavePeriod = this.doOpenMenuAddLeavePeriod();
+        this.menuAddLeavePeriod
+            .contains(DROPDOWN_LEAVE_PEARIODS_ITEM_ADMINISTRAVIVE_PERIOD_TITLE)
+            .click();
+        //let droverAddSickPeriod = new DroverAddLeavePeriod(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
+        return this.droverAddLeavePeriod.setTitle(
+            DROPDOWN_LEAVE_PEARIODS_ITEM_PLANNED_PERIOD_TITLE
+        );
+    }
 }

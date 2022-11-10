@@ -1,26 +1,25 @@
 //логина через API
-export async function doLogin(userData) {
-    return cy
-        .request({
-            method: "POST",
-            url: "/api/login",
-            body: {
-                login: userData.username,
-                password: userData.password,
-            },
-        })
-        .then(
-            await function (response) {
-                console.log("response");
-                console.log(response.body);
-                Cypress.env("login_resp", response.body);
-                expect(response.status).to.eq(200);
-                expect(response.body.token).to.not.be.null;
-                cy.setCookie("auth_token", response.body.token);
-            }
-        );
+export function doLogin(userData) {
+    return cy.request({
+        method: "POST",
+        url: "/api/login",
+        body: {
+            login: userData.username,
+            password: userData.password,
+        },
+    });
 }
 
+export async function doLoginAndSaveUserInfoAndToken(userCreds) {
+    return doLogin(userCreds).then(
+        await function (response) {
+            expect(response.status).to.eq(200);
+            expect(response.body.token).to.not.be.null;
+            cy.setCookie("auth_token", response.body.token);
+            Cypress.env("userInfoFromPOST", response.body);
+        }
+    );
+}
 //выход из системы API
 export function doLogout(userData) {
     cy.request({
@@ -48,27 +47,24 @@ export function getUserInfoByToken(userToken) {
 }
 
 //выход из системы API
-export function getDeleteAllLeavePeriods(userInfo) {
-    console.log("userInfo");
-    console.log(userInfo.user.id);
-    cy.request({
+function getAllLeavePeriods(userInfo) {
+    return cy.request({
         method: "GET",
         url: "/api/leave-periods/?userId=" + userInfo.user.id,
         body: { token: toString(cy.getCookie("auth_token")) },
-    })
-        //.as("@getLP")
-        .then(function (response) {
-            //expect(response.status).to.eq(204);
-            console.log(response.body);
-            response.body.forEach((element) => {
-                cy.request({
-                    method: "DELETE",
-                    url: "/api/leave-periods/" + element.id,
-                    body: { token: toString(cy.getCookie("auth_token")) },
-                });
+    });
+}
+
+export function deleteAllLeavePeriods(userInfo) {
+    return getAllLeavePeriods(userInfo).then(function (response) {
+        expect(response.status).to.eq(200);
+        console.log(response.body);
+        response.body.forEach((element) => {
+            cy.request({
+                method: "DELETE",
+                url: "/api/leave-periods/" + element.id,
+                body: { token: toString(cy.getCookie("auth_token")) },
             });
         });
-    // .then(function (resp) {
-    //     return resp.body;
-    // });
+    });
 }

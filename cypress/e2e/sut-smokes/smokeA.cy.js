@@ -16,12 +16,12 @@ describe("Смоук тест Admin", () => {
 
         it("Вход в систему Admin", () => {
             //логин через UI
-            suitLogin.loginUser(userCreds).doNavigate();
+            suitLogin.doLoginUserAndCheckVisibleElems(userCreds).doNavigate();
         });
 
         it("Выход из системы Admin", () => {
             //логин через API
-            API.doLogin(userCreds);
+            API.doLoginAndSaveUserInfoAndToken(userCreds);
             suitLogin.pageLaborReports.doNavigate();
 
             //выход из системы через UI
@@ -31,22 +31,30 @@ describe("Смоук тест Admin", () => {
 
     describe("3.1.2 Отсутствия Admin", () => {
         let userCreds = creds_from_file.admin;
-        let testAuth = new SuitLogin();
         let suitLaborReports = new SuiteLaborReports();
-        let userInfo2;
-
+        let token;
         before(() => {
             localStorage.setItem("sut/onboardingStatus", '{"LaborCostsOnboardingFinished":true}');
+            API.doLoginAndSaveUserInfoAndToken(userCreds).then(() => {
+                token = Cypress.env("userInfoFromPOST").token;
+            });
         });
 
-        it.only("3.1.2.1. Добавление больничного/отпуска со страницы трудозатрат администратор.A", () => {
-            API.doLogin(userCreds)
-                .then(function () {
-                    API.getDeleteAllLeavePeriods(Cypress.env("login_resp"));
-                })
-                .then(function () {
-                    suitLaborReports.addSickPeriod();
-                });
+        beforeEach(() => {
+            cy.setCookie("auth_token", token);
+            API.deleteAllLeavePeriods(Cypress.env("userInfoFromPOST"));
+        });
+
+        it("3.1.2.1. Добавление больничного со страницы трудозатрат администратор.A", () => {
+            suitLaborReports.addSickPeriod();
+        });
+
+        it("3.1.2.1. Добавление ежегодного отпуска со страницы трудозатрат администратор.A", () => {
+            suitLaborReports.addPlannedLeavePeriod();
+        });
+
+        it("3.1.2.1. Добавление административного отпуска со страницы трудозатрат администратор.A", () => {
+            suitLaborReports.addAdministrativeLeavePeriod();
         });
     });
 });
