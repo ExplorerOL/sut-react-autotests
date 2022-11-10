@@ -18,6 +18,7 @@ export default class SuiteLaborReports {
     //добавить Больничный отпуск
     addSickPeriod(startDate, endDate) {
         //проверяем, что больничные не проставлены
+        this.pageLaborReports.doNavigate().doWaitForApiResponse();
         this.checkNoLeavePeriodPresent();
 
         this.pageLaborReports.doOpenDroverAddSickPeriod();
