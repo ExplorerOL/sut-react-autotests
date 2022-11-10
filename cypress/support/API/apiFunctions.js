@@ -1,29 +1,34 @@
 //логина через API
 export function doLogin(userData) {
     let userInfo;
-    cy.request({
+
+    return cy.request({
         method: "POST",
         url: "/api/login",
         body: {
             login: userData.username,
             password: userData.password,
         },
-    }).then(function (response) {
-        console.log("1 then");
-        console.log(response.body);
-
-        expect(response.status).to.eq(200);
-        expect(response.body.token).to.not.be.null;
-        cy.setCookie("auth_token", response.body.token);
-        console.log("POST /api/login answer was received");
-        Cypress.env("login_resp", response.body);
-
-        console.log("from env");
-        console.log(Cypress.env("login_resp"));
-        //this.userInfo = response.body;
-        //return this.userInfo;
-        //console.log("1 " + response.body);
     });
+    //.as("APILogin")
+    //cy.wait("@APILogin").then((response) => {});
+
+    // .then(function (response) {
+    //     console.log("1 then");
+    //     console.log(response.body);
+
+    //     expect(response.status).to.eq(200);
+    //     expect(response.body.token).to.not.be.null;
+    //     cy.setCookie("auth_token", response.body.token);
+    //     console.log("POST /api/login answer was received");
+    //     Cypress.env("login_resp", response.body);
+
+    //     console.log("from env");
+    //     console.log(Cypress.env("login_resp"));
+    //     //this.userInfo = response.body;
+    //     //return this.userInfo;
+    //     //console.log("1 " + response.body);
+    // });
     // console.log("before return 2");
     // console.log(userInfo);
     // return userInfo;

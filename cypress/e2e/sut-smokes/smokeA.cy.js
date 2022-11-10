@@ -37,7 +37,6 @@ describe("Смоук тест Admin", () => {
 
         before(() => {
             localStorage.setItem("sut/onboardingStatus", '{"LaborCostsOnboardingFinished":true}');
-            API.doLogin(userCreds);
         });
 
         it("3.1.2.1. Добавление больничного/отпуска со страницы трудозатрат администратор.A", () => {
@@ -45,15 +44,34 @@ describe("Смоук тест Admin", () => {
         });
         it.only("тест", () => {
             console.log("before 11111111111111call");
-            let i;
+            //cy.intercept("api/login").as("APILogin");
+            //API.doLogin(userCreds);
+            //     .then(() => {
+            //     console.log("resp in then");
+            //     //console.log(resp1);
+            // });
+            //cy.wait("@APILogin");
+            console.log("resp in before");
+            //console.log(resp);
+            API.doLogin(userCreds).then(function (response) {
+                console.log("1 then");
+                console.log(response.body);
+                expect(response.status).to.eq(200);
+                expect(response.body.token).to.not.be.null;
+                cy.setCookie("auth_token", response.body.token);
+                console.log("POST /api/login answer was received");
+                Cypress.env("login_resp", response.body);
 
-            console.log("after call");
-            console.log(userInfo2);
-            testAuth.pageLaborReports.doNavigate().doWaitForApiResponse();
-            //API.getUserInfoByToken(cy.getCookie("auth_token"));
-            console.log("from env in it");
-            console.log(Cypress.env("login_resp"));
-            API.getAllLeavePeriods(Cypress.env("login_resp"));
+                console.log("after call");
+                console.log(userInfo2);
+                testAuth.pageLaborReports.doNavigate().doWaitForApiResponse();
+                //API.getUserInfoByToken(cy.getCookie("auth_token"));
+                console.log("from env in it");
+                console.log(Cypress.env("login_resp"));
+                API.getAllLeavePeriods(Cypress.env("login_resp"));
+            });
+
+            let i;
         });
     });
 });
