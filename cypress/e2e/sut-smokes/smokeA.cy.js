@@ -53,19 +53,19 @@ describe("Смоук тест Admin", () => {
             //cy.wait("@APILogin");
             console.log("resp in before");
             //console.log(resp);
-            API.doLogin(userCreds).then(function (response) {
-                console.log("1 then");
-                console.log(response.body);
-                expect(response.status).to.eq(200);
-                expect(response.body.token).to.not.be.null;
-                cy.setCookie("auth_token", response.body.token);
-                console.log("POST /api/login answer was received");
-                Cypress.env("login_resp", response.body);
+            API.doLogin(userCreds).then(function () {
+                // console.log("1 then");
+                // console.log(response.body);
+                // expect(response.status).to.eq(200);
+                // expect(response.body.token).to.not.be.null;
+                // cy.setCookie("auth_token", response.body.token);
+                // console.log("POST /api/login answer was received");
+                // Cypress.env("login_resp", response.body);
 
-                console.log("after call");
-                console.log(userInfo2);
-                testAuth.pageLaborReports.doNavigate().doWaitForApiResponse();
-                //API.getUserInfoByToken(cy.getCookie("auth_token"));
+                // console.log("after call");
+                // console.log(userInfo2);
+                // testAuth.pageLaborReports.doNavigate().doWaitForApiResponse();
+                // //API.getUserInfoByToken(cy.getCookie("auth_token"));
                 console.log("from env in it");
                 console.log(Cypress.env("login_resp"));
                 API.getAllLeavePeriods(Cypress.env("login_resp"));
