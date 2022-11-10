@@ -1,14 +1,14 @@
 //import PageLogin from "../sutPages/pageLogin";
 import PageLaborReport from "../sutPages/PageLaborReports/PageLaborReports";
-import * as auxFunctions from "../support/auxilary/auxilaryFunctions";
+import * as helpers from "../support/helpers.js";
 //import DroverAddLeavePeriod from "../sutPages/PageLaborReport/DroverAddLeavePeriod";
 
 export default class SuiteLaborReports {
     constructor() {
         this.pageLaborReports = new PageLaborReport();
         //this.droverAddLeavePeriod = new DroverAddLeavePeriod;
-        this.startLeaveDay = auxFunctions.calculateLeavePeriodStartDayForPicking();
-        this.endLeaveDate = auxFunctions.calculateLeavePeriodEndDateForTyping();
+        this.startLeaveDay = helpers.calculateLeavePeriodStartDayForPicking();
+        this.endLeaveDate = helpers.calculateLeavePeriodEndDateForTyping();
     }
 
     clearAllLeavewPeriods() {}
