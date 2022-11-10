@@ -1,9 +1,6 @@
 //логина через API
 export async function doLogin(userData) {
-    let response;
-
-    //response = await
-    await cy
+    return cy
         .request({
             method: "POST",
             url: "/api/login",
@@ -12,37 +9,16 @@ export async function doLogin(userData) {
                 password: userData.password,
             },
         })
-        //.as("APILogin")
-        //cy.wait("@APILogin").then((response) => {});
         .then(
             await function (response) {
                 console.log("response");
                 console.log(response.body);
                 Cypress.env("login_resp", response.body);
-
-                //     console.log("1 then");
-                //     console.log(response.body);
-
-                //     expect(response.status).to.eq(200);
-                //     expect(response.body.token).to.not.be.null;
+                expect(response.status).to.eq(200);
+                expect(response.body.token).to.not.be.null;
                 cy.setCookie("auth_token", response.body.token);
-                //     console.log("POST /api/login answer was received");
-                //     Cypress.env("login_resp", response.body);
-
-                //     console.log("from env");
-                //     console.log(Cypress.env("login_resp"));
-                //     //this.userInfo = response.body;
-                //     //return this.userInfo;
-                //     //console.log("1 " + response.body);
-                // })
-                // .then(function () {
-                //     console.log("before return");
-                //     return;
             }
         );
-    // console.log("before return 2");
-    // console.log(userInfo);
-    // return userInfo;
 }
 
 //выход из системы API
@@ -72,7 +48,7 @@ export function getUserInfoByToken(userToken) {
 }
 
 //выход из системы API
-export function getAllLeavePeriods(userInfo) {
+export function getDeleteAllLeavePeriods(userInfo) {
     console.log("userInfo");
     console.log(userInfo.user.id);
     cy.request({

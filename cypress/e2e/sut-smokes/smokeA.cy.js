@@ -39,42 +39,14 @@ describe("Смоук тест Admin", () => {
             localStorage.setItem("sut/onboardingStatus", '{"LaborCostsOnboardingFinished":true}');
         });
 
-        it("3.1.2.1. Добавление больничного/отпуска со страницы трудозатрат администратор.A", () => {
-            suitLaborReports.addSickPeriod();
-        });
-        it.only("тест", () => {
-            console.log("before 11111111111111call");
-            //cy.intercept("api/login").as("APILogin");
-            //API.doLogin(userCreds);
-            //     .then(() => {
-            //     console.log("resp in then");
-            //     //console.log(resp1);
-            // });
-            //cy.wait("@APILogin");
-            console.log("resp in before");
-            //console.log(resp);
+        it.only("3.1.2.1. Добавление больничного/отпуска со страницы трудозатрат администратор.A", () => {
             API.doLogin(userCreds)
                 .then(function () {
-                    // console.log("1 then");
-                    // console.log(response.body);
-                    // expect(response.status).to.eq(200);
-                    // expect(response.body.token).to.not.be.null;
-                    // cy.setCookie("auth_token", response.body.token);
-                    // console.log("POST /api/login answer was received");
-                    // Cypress.env("login_resp", response.body);
-                    // console.log("after call");
-                    // console.log(userInfo2);
-                    // testAuth.pageLaborReports.doNavigate().doWaitForApiResponse();
-                    // //API.getUserInfoByToken(cy.getCookie("auth_token"));
-                    API.getAllLeavePeriods(Cypress.env("login_resp"));
+                    API.getDeleteAllLeavePeriods(Cypress.env("login_resp"));
                 })
                 .then(function () {
                     suitLaborReports.addSickPeriod();
                 });
-            // console.log("from env in it withoun then");
-            // console.log(Cypress.env("login_resp"));
-
-            let i;
         });
     });
 });
