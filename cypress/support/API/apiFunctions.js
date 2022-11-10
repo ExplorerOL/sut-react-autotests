@@ -2,40 +2,44 @@
 export async function doLogin(userData) {
     let response;
 
-    response = await cy.request({
-        method: "POST",
-        url: "/api/login",
-        body: {
-            login: userData.username,
-            password: userData.password,
-        },
-    });
-    //.as("APILogin")
-    //cy.wait("@APILogin").then((response) => {});
-    console.log("response");
-    console.log(response);
-    Cypress.env("login_resp", response.body);
+    //response = await
+    await cy
+        .request({
+            method: "POST",
+            url: "/api/login",
+            body: {
+                login: userData.username,
+                password: userData.password,
+            },
+        })
+        //.as("APILogin")
+        //cy.wait("@APILogin").then((response) => {});
+        .then(
+            await function (response) {
+                console.log("response");
+                console.log(response.body);
+                Cypress.env("login_resp", response.body);
 
-    // .then(function (response) {
-    //     console.log("1 then");
-    //     console.log(response.body);
+                //     console.log("1 then");
+                //     console.log(response.body);
 
-    //     expect(response.status).to.eq(200);
-    //     expect(response.body.token).to.not.be.null;
-    cy.setCookie("auth_token", response.body.token);
-    //     console.log("POST /api/login answer was received");
-    //     Cypress.env("login_resp", response.body);
+                //     expect(response.status).to.eq(200);
+                //     expect(response.body.token).to.not.be.null;
+                cy.setCookie("auth_token", response.body.token);
+                //     console.log("POST /api/login answer was received");
+                //     Cypress.env("login_resp", response.body);
 
-    //     console.log("from env");
-    //     console.log(Cypress.env("login_resp"));
-    //     //this.userInfo = response.body;
-    //     //return this.userInfo;
-    //     //console.log("1 " + response.body);
-    // })
-    // .then(function () {
-    //     console.log("before return");
-    //     return;
-    // });
+                //     console.log("from env");
+                //     console.log(Cypress.env("login_resp"));
+                //     //this.userInfo = response.body;
+                //     //return this.userInfo;
+                //     //console.log("1 " + response.body);
+                // })
+                // .then(function () {
+                //     console.log("before return");
+                //     return;
+            }
+        );
     // console.log("before return 2");
     // console.log(userInfo);
     // return userInfo;
@@ -70,17 +74,25 @@ export function getUserInfoByToken(userToken) {
 //выход из системы API
 export function getAllLeavePeriods(userInfo) {
     console.log("userInfo");
-    console.log(userInfo);
-    // cy.request({
-    //     method: "GET",
-    //     url: "/api/leave-periods/?userId=" + userInfo.user.id + cy.getCookie("auth_token"),
-    // })
-    //     .as("@getLP")
-    //     .then(function (response) {
-    //         //expect(response.status).to.eq(204);
-    //         console.log(response);
-    //     })
-    //     .then(function (resp) {
-    //         return resp.body;
-    //     });
+    console.log(userInfo.user.id);
+    cy.request({
+        method: "GET",
+        url: "/api/leave-periods/?userId=" + userInfo.user.id,
+        body: { token: toString(cy.getCookie("auth_token")) },
+    })
+        //.as("@getLP")
+        .then(function (response) {
+            //expect(response.status).to.eq(204);
+            console.log(response.body);
+            response.body.forEach((element) => {
+                cy.request({
+                    method: "DELETE",
+                    url: "/api/leave-periods/" + element.id,
+                    body: { token: toString(cy.getCookie("auth_token")) },
+                });
+            });
+        });
+    // .then(function (resp) {
+    //     return resp.body;
+    // });
 }

@@ -53,8 +53,7 @@ describe("Смоук тест Admin", () => {
             //cy.wait("@APILogin");
             console.log("resp in before");
             //console.log(resp);
-            API.doLogin(userCreds)
-            .then(function () {
+            API.doLogin(userCreds).then(function () {
                 // console.log("1 then");
                 // console.log(response.body);
                 // expect(response.status).to.eq(200);
@@ -62,16 +61,14 @@ describe("Смоук тест Admin", () => {
                 // cy.setCookie("auth_token", response.body.token);
                 // console.log("POST /api/login answer was received");
                 // Cypress.env("login_resp", response.body);
-
                 // console.log("after call");
                 // console.log(userInfo2);
                 // testAuth.pageLaborReports.doNavigate().doWaitForApiResponse();
                 // //API.getUserInfoByToken(cy.getCookie("auth_token"));
-
-                console.log("from env in it");
-                console.log(Cypress.env("login_resp"));
-                //     API.getAllLeavePeriods(Cypress.env("login_resp"));
+                API.getAllLeavePeriods(Cypress.env("login_resp"));
             });
+            // console.log("from env in it withoun then");
+            // console.log(Cypress.env("login_resp"));
 
             let i;
         });
