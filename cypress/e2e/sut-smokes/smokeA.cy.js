@@ -33,17 +33,27 @@ describe("Смоук тест Admin", () => {
         let userCreds = creds_from_file.admin;
         let testAuth = new SuitLogin();
         let suitLaborReports = new SuiteLaborReports();
-        let userInfo;
+        let userInfo2;
 
         before(() => {
             localStorage.setItem("sut/onboardingStatus", '{"LaborCostsOnboardingFinished":true}');
-            userInfo = API.doLogin(userCreds);
-            console.log(userInfo);
-            testAuth.pageLaborReports.doNavigate().doWaitForApiResponse();
+            API.doLogin(userCreds);
         });
 
-        it.only("3.1.2.1. Добавление больничного/отпуска со страницы трудозатрат администратор.A", () => {
-            suitLeavePeriod.addSickPeriod();
+        it("3.1.2.1. Добавление больничного/отпуска со страницы трудозатрат администратор.A", () => {
+            suitLaborReports.addSickPeriod();
+        });
+        it.only("тест", () => {
+            console.log("before 11111111111111call");
+            let i;
+
+            console.log("after call");
+            console.log(userInfo2);
+            testAuth.pageLaborReports.doNavigate().doWaitForApiResponse();
+            //API.getUserInfoByToken(cy.getCookie("auth_token"));
+            console.log("from env in it");
+            console.log(Cypress.env("login_resp"));
+            API.getAllLeavePeriods(Cypress.env("login_resp"));
         });
     });
 });
