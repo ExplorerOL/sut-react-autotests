@@ -14,14 +14,17 @@ describe("Смоук тест Admin", () => {
         let userCreds = creds_from_file.admin;
         let suitLogin = new SuitLogin();
 
-        it("Вход в систему Admin", () => {
+        it.only("Вход в систему Admin", () => {
             //логин через UI
             suitLogin.doLoginUserAndCheckVisibleElems(userCreds).doNavigate();
         });
 
         it("Выход из системы Admin", () => {
             //логин через API
-            API.doLoginAndSaveUserInfoAndToken(userCreds);
+            API.doLogin(userCreds).then((POSTResponseBody) => {
+                console.log(POSTResponseBody);
+                API.saveUserInfoAndSetCookies(POSTResponseBody);
+            });
             suitLogin.pageLaborReports.doNavigate();
 
             //выход из системы через UI
@@ -35,17 +38,24 @@ describe("Смоук тест Admin", () => {
         let token;
         before(() => {
             localStorage.setItem("sut/onboardingStatus", '{"LaborCostsOnboardingFinished":true}');
-            API.doLoginAndSaveUserInfoAndToken(userCreds).then(() => {
-                token = Cypress.env("userInfoFromPOST").token;
-            });
+            // API.doLoginAndSaveUserInfoAndToken(userCreds).then(() => {
+            //     token = Cypress.env("userInfoFromPOST").token;
+            // });
+            API.doLogin(userCreds)
+                .then((POSTResponseBody) => {
+                    API.saveUserInfoAndSetCookies(POSTResponseBody);
+                })
+                .then(() => {
+                    token = Cypress.env("userAuthInfoFromPOST").token;
+                });
         });
 
         beforeEach(() => {
             cy.setCookie("auth_token", token);
-            API.deleteAllLeavePeriods(Cypress.env("userInfoFromPOST"));
+            API.deleteAllLeavePeriods(Cypress.env("userAuthInfoFromPOST"));
         });
 
-        it.only("3.1.2.1. Добавление больничного со страницы трудозатрат.A", () => {
+        it("3.1.2.1. Добавление больничного со страницы трудозатрат.A", () => {
             suitLaborReports.addSickPeriod();
         });
 
@@ -56,8 +66,13 @@ describe("Смоук тест Admin", () => {
         it("3.1.2.1. Добавление административного отпуска со страницы трудозатрат.A", () => {
             suitLaborReports.addAdministrativeLeavePeriod();
         });
-        it("3.1.2.1. Добавление деретноо отпуска со страницы трудозатрат.A", () => {
+        it("3.1.2.1. Добавление декретного отпуска со страницы трудозатрат.A", () => {
             suitLaborReports.addMaternityPeriod();
+        });
+
+        it("3.1.2.1. Добавление больничного со страницы трудозатрат.A", () => {
+            //API.addLeavePeriod(Cypress.env("userAuthInfoFromPOST"), "SIC");
+            //suitLaborReports.pageLaborReports.doNavigate();
         });
     });
 });

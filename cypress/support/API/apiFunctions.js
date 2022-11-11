@@ -1,25 +1,24 @@
+import * as helpers from "../../support/helpers.js";
+
 //логина через API
-export function doLogin(userData) {
+export function doLogin(userCreds) {
     return cy.request({
         method: "POST",
         url: "/api/login",
         body: {
-            login: userData.username,
-            password: userData.password,
+            login: userCreds.username,
+            password: userCreds.password,
         },
     });
 }
 
-export async function doLoginAndSaveUserInfoAndToken(userCreds) {
-    return doLogin(userCreds).then(
-        await function (response) {
-            expect(response.status).to.eq(200);
-            expect(response.body.token).to.not.be.null;
-            cy.setCookie("auth_token", response.body.token);
-            Cypress.env("userInfoFromPOST", response.body);
-        }
-    );
+export function saveUserInfoAndSetCookies(POSTResponseBody) {
+    expect(POSTResponseBody.status).to.eq(200);
+    expect(POSTResponseBody.body.token).to.not.be.null;
+    cy.setCookie("auth_token", POSTResponseBody.body.token);
+    Cypress.env("userAuthInfoFromPOST", POSTResponseBody.body);
 }
+
 //выход из системы API
 export function doLogout(userData) {
     cy.request({
@@ -70,15 +69,16 @@ export function deleteAllLeavePeriods(userInfo) {
 }
 
 export function addLeavePeriod(userInfo, leavePeriodType) {
-    return getAllLeavePeriods(userInfo).then(function (response) {
-        expect(response.status).to.eq(200);
-        console.log(response.body);
-        response.body.forEach((element) => {
-            cy.request({
-                method: "DELETE",
-                url: "/api/leave-periods/" + element.id,
-                body: { token: toString(cy.getCookie("auth_token")) },
-            });
-        });
+    let startDate = helpers.calculateLeavePeriodStartDateForTyping();
+    let endDate = helpers.calculateLeavePeriodEndDateForTyping();
+    return cy.request({
+        method: "POST",
+        url: "/api/leave-periods/",
+        body: {
+            reason: "SIC",
+            startDate: "2022-11-02",
+            endDate: "2022-11-11",
+            userId: userInfo.user.id,
+        },
     });
 }
