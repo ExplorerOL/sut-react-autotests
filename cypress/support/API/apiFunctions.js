@@ -68,3 +68,17 @@ export function deleteAllLeavePeriods(userInfo) {
         });
     });
 }
+
+export function addLeavePeriod(userInfo, leavePeriodType) {
+    return getAllLeavePeriods(userInfo).then(function (response) {
+        expect(response.status).to.eq(200);
+        console.log(response.body);
+        response.body.forEach((element) => {
+            cy.request({
+                method: "DELETE",
+                url: "/api/leave-periods/" + element.id,
+                body: { token: toString(cy.getCookie("auth_token")) },
+            });
+        });
+    });
+}

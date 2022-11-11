@@ -116,31 +116,31 @@ export default class PageLaborReports {
         return this.menuAddLeavePeriod;
     }
 
-    //открыть дровер добавления больничного
-    doOpenDroverAddSickPeriod() {
+    //открыть дровер добавления отсутствия
+    doOpenDroverAddLeavePeriod(leavePeriodType) {
+        let dropdownAddLeavePerionItem;
+        switch (leavePeriodType) {
+            case "SIC": {
+                dropdownAddLeavePerionItem = DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE;
+                break;
+            }
+            case "VAC": {
+                dropdownAddLeavePerionItem = DROPDOWN_LEAVE_PEARIODS_ITEM_PLANNED_PERIOD_TITLE;
+                break;
+            }
+            case "ADM": {
+                dropdownAddLeavePerionItem =
+                    DROPDOWN_LEAVE_PEARIODS_ITEM_ADMINISTRAVIVE_PERIOD_TITLE;
+                break;
+            }
+            case "MAT": {
+                dropdownAddLeavePerionItem = DROPDOWN_LEAVE_PEARIODS_ITEM_MATERNITY_PERIOD_TITLE;
+            }
+        }
+
         this.menuAddLeavePeriod = this.doOpenMenuAddLeavePeriod();
-        this.menuAddLeavePeriod.contains(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE).click();
-        //let droverAddSickPeriod = new DroverAddLeavePeriod(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
-        return this.droverAddLeavePeriod.setTitle(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
-    }
-    //открыть дровер добавления ежегодного отпуска
-    doOpenDroverAddPlannedLeavePeriod() {
-        this.menuAddLeavePeriod = this.doOpenMenuAddLeavePeriod();
-        this.menuAddLeavePeriod.contains(DROPDOWN_LEAVE_PEARIODS_ITEM_PLANNED_PERIOD_TITLE).click();
-        //let droverAddSickPeriod = new DroverAddLeavePeriod(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
-        return this.droverAddLeavePeriod.setTitle(
-            DROPDOWN_LEAVE_PEARIODS_ITEM_PLANNED_PERIOD_TITLE
-        );
-    }
-    //открыть дровер добавления административного отпуска
-    doOpenDroverAddAdministrativeLeavePeriod() {
-        this.menuAddLeavePeriod = this.doOpenMenuAddLeavePeriod();
-        this.menuAddLeavePeriod
-            .contains(DROPDOWN_LEAVE_PEARIODS_ITEM_ADMINISTRAVIVE_PERIOD_TITLE)
-            .click();
-        //let droverAddSickPeriod = new DroverAddLeavePeriod(DROPDOWN_LEAVE_PEARIODS_ITEM_SICK_PERIOD_TITLE);
-        return this.droverAddLeavePeriod.setTitle(
-            DROPDOWN_LEAVE_PEARIODS_ITEM_PLANNED_PERIOD_TITLE
-        );
+        this.menuAddLeavePeriod.contains(dropdownAddLeavePerionItem).click();
+
+        return this.droverAddLeavePeriod.setTitle(dropdownAddLeavePerionItem);
     }
 }

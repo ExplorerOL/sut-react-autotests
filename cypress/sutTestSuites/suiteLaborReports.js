@@ -21,7 +21,7 @@ export default class SuiteLaborReports {
         this.pageLaborReports.doNavigate().doWaitForApiResponse();
         this.checkLeavePeriodNotPresent();
 
-        this.pageLaborReports.doOpenDroverAddSickPeriod();
+        this.pageLaborReports.doOpenDroverAddLeavePeriod("SIC");
         this.pageLaborReports.droverAddLeavePeriod
             .doSelectDayOfCurrentMonthFromDatapicker(this.startLeaveDay)
             .doTypeEndDate(this.endLeaveDate)
@@ -34,7 +34,7 @@ export default class SuiteLaborReports {
         this.pageLaborReports.doNavigate().doWaitForApiResponse();
         this.checkLeavePeriodNotPresent();
 
-        this.pageLaborReports.doOpenDroverAddPlannedLeavePeriod();
+        this.pageLaborReports.doOpenDroverAddLeavePeriod("VAC");
         this.pageLaborReports.droverAddLeavePeriod
             .doSelectDayOfCurrentMonthFromDatapicker(this.startLeaveDay)
             .doTypeEndDate(this.endLeaveDate)
@@ -49,7 +49,7 @@ export default class SuiteLaborReports {
         this.pageLaborReports.doNavigate().doWaitForApiResponse();
         this.checkLeavePeriodNotPresent();
 
-        this.pageLaborReports.doOpenDroverAddAdministrativeLeavePeriod();
+        this.pageLaborReports.doOpenDroverAddLeavePeriod("ADM");
         this.pageLaborReports.droverAddLeavePeriod
             .doSelectDayOfCurrentMonthFromDatapicker(this.startLeaveDay)
             .doTypeEndDate(this.endLeaveDate)
@@ -62,7 +62,20 @@ export default class SuiteLaborReports {
         );
     }
     //добавить Декретный отпуск
-    addMaternityPeriod(startDate, endDate) {}
+    addMaternityPeriod(startDate, endDate) {
+        //проверяем, что отпуск не проставлен
+        this.pageLaborReports.doNavigate().doWaitForApiResponse();
+        this.checkLeavePeriodNotPresent();
+
+        this.pageLaborReports.doOpenDroverAddLeavePeriod("MAT");
+        this.pageLaborReports.droverAddLeavePeriod
+            .doSelectDayOfCurrentMonthFromDatapicker(this.startLeaveDay)
+            .doTypeEndDate(this.endLeaveDate)
+            .doClickBtnSave();
+
+        //проверяем, что отпуск появлися в таблице трудозатрат и таблице отсутствий
+        this.checkLeavePeriodWasAdded(helpers.maternityPeriodCellsText(), "Декретный отпуск");
+    }
     //удалить последний отпуск
     addMostRecentLeavePeriod(startDate, endDate) {}
 
