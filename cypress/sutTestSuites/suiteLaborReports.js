@@ -19,31 +19,20 @@ export default class SuiteLaborReports {
     addSickPeriod(startDate, endDate) {
         //проверяем, что больничные не проставлены
         this.pageLaborReports.doNavigate().doWaitForApiResponse();
-        this.checkNoLeavePeriodPresent();
+        this.checkLeavePeriodNotPresent();
 
         this.pageLaborReports.doOpenDroverAddSickPeriod();
         this.pageLaborReports.droverAddLeavePeriod
             .doSelectDayOfCurrentMonthFromDatapicker(this.startLeaveDay)
             .doTypeEndDate(this.endLeaveDate)
             .doClickBtnSave();
-
-        //проверяем, что больничный появлися в таблице трудозатрат и таблице отсутствий
-        this.pageLaborReports
-            .getTableLaborReportFirstPrjRowCells()
-            .should("have.text", helpers.sickPeriodCheckString());
-        this.pageLaborReports
-            .getTableLaborReportRowTotalCells()
-            .should("have.text", helpers.sickPeriodCheckString());
-
-        this.pageLaborReports
-            .getTableLeavePeriodsFirstLeaveTypeCell()
-            .should("have.text", "Больничный");
+        this.checkLeavePeriodWasAdded(helpers.sickPeriodCellsText(), "Больничный");
     }
     //добавить Ежегодный отпуск
     addPlannedLeavePeriod(startDate, endDate) {
         //проверяем, что отпуск не проставлен
         this.pageLaborReports.doNavigate().doWaitForApiResponse();
-        this.checkNoLeavePeriodPresent();
+        this.checkLeavePeriodNotPresent();
 
         this.pageLaborReports.doOpenDroverAddPlannedLeavePeriod();
         this.pageLaborReports.droverAddLeavePeriod
@@ -52,22 +41,13 @@ export default class SuiteLaborReports {
             .doClickBtnSave();
 
         //проверяем, что отпуск появлися в таблице трудозатрат и таблице отсутствий
-        this.pageLaborReports
-            .getTableLaborReportFirstPrjRowCells()
-            .should("have.text", helpers.plannedLeavePeriodCheckString());
-        this.pageLaborReports
-            .getTableLaborReportRowTotalCells()
-            .should("have.text", helpers.plannedLeavePeriodCheckString());
-
-        this.pageLaborReports
-            .getTableLeavePeriodsFirstLeaveTypeCell()
-            .should("have.text", "Ежегодный отпуск");
+        this.checkLeavePeriodWasAdded(helpers.plannedLeavePeriodCellsText(), "Ежегодный отпуск");
     }
     //добавить Административный отпуск
     addAdministrativeLeavePeriod(startDate, endDate) {
         //проверяем, что отпуск не проставлен
         this.pageLaborReports.doNavigate().doWaitForApiResponse();
-        this.checkNoLeavePeriodPresent();
+        this.checkLeavePeriodNotPresent();
 
         this.pageLaborReports.doOpenDroverAddAdministrativeLeavePeriod();
         this.pageLaborReports.droverAddLeavePeriod
@@ -76,16 +56,10 @@ export default class SuiteLaborReports {
             .doClickBtnSave();
 
         //проверяем, что отпуск появлися в таблице трудозатрат и таблице отсутствий
-        this.pageLaborReports
-            .getTableLaborReportFirstPrjRowCells()
-            .should("have.text", helpers.administrativePeriodCheckString());
-        this.pageLaborReports
-            .getTableLaborReportRowTotalCells()
-            .should("have.text", helpers.administrativePeriodCheckString());
-
-        this.pageLaborReports
-            .getTableLeavePeriodsFirstLeaveTypeCell()
-            .should("have.text", "Административный отпуск");
+        this.checkLeavePeriodWasAdded(
+            helpers.administrativePeriodCellsText(),
+            "Административный отпуск"
+        );
     }
     //добавить Декретный отпуск
     addMaternityPeriod(startDate, endDate) {}
@@ -93,24 +67,19 @@ export default class SuiteLaborReports {
     addMostRecentLeavePeriod(startDate, endDate) {}
 
     //вспомогательные методы проверок
-    checkNoLeavePeriodPresent() {
-        //this.getTableLaborReportRowsWithProjects().children().contains('[role="gridcell"]', "Б").should('not.exist');
+    checkLeavePeriodNotPresent() {
         this.pageLaborReports.getTableLaborReportFirstPrjRowCells().should("have.text", "");
         this.pageLaborReports.getTableLaborReportRowTotalCells().should("have.text", "");
 
         this.pageLaborReports.getTableLeavePeriodsFirstLeaveTypeCell().should("not.exist");
     }
-    checkLeavePeriodWasAdded() {
+    checkLeavePeriodWasAdded(cellsText, periodType) {
         //this.getTableLaborReportRowsWithProjects().children().contains('[role="gridcell"]', "Б").should('not.exist');
-        this.pageLaborReports
-            .getTableLaborReportFirstPrjRowCells()
-            .should("have.text", "ОтОтОтОтОтОтОтОтОтОт");
-        this.pageLaborReports
-            .getTableLaborReportRowTotalCells()
-            .should("have.text", "ОтОтОтОтОтОтОтОтОтОт");
+        this.pageLaborReports.getTableLaborReportFirstPrjRowCells().should("have.text", cellsText);
+        this.pageLaborReports.getTableLaborReportRowTotalCells().should("have.text", cellsText);
 
         this.pageLaborReports
             .getTableLeavePeriodsFirstLeaveTypeCell()
-            .should("have.text", "Ежегодный отпуск");
+            .should("have.text", periodType);
     }
 }

@@ -45,7 +45,7 @@ describe("Смоук тест Admin", () => {
             API.deleteAllLeavePeriods(Cypress.env("userInfoFromPOST"));
         });
 
-        it("3.1.2.1. Добавление больничного со страницы трудозатрат администратор.A", () => {
+        it.only("3.1.2.1. Добавление больничного со страницы трудозатрат администратор.A", () => {
             suitLaborReports.addSickPeriod();
         });
 

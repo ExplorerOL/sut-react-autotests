@@ -23,15 +23,15 @@ export function calculateLeavePeriodEndDateForTyping() {
     return endDate;
 }
 
-export function sickPeriodCheckString() {
+export function sickPeriodCellsText() {
     return "ББББББББББ";
 }
-export function plannedLeavePeriodCheckString() {
+export function plannedLeavePeriodCellsText() {
     return "ОтОтОтОтОтОтОтОтОтОт";
 }
-export function administrativePeriodCheckString() {
+export function administrativePeriodCellsText() {
     return "АААААААААА";
 }
-export function maternityPeriodCheckString() {
+export function maternityPeriodCellsText() {
     return "ДДДДДДДДДД";
 }
