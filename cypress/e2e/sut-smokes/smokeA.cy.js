@@ -1,9 +1,11 @@
 import SuitLogin from "../../sutTestSuites/SuiteLogin.js";
 import SuiteLaborReports from "../../sutTestSuites/SuiteLaborReports.js";
 import * as API from "../../support/API/apiFunctions";
+import * as helpers from "../../support/helpers.js";
 
 //файл с набором валидных учетных записей
-const creds_from_file = require("../../fixtures/userCreds.json");
+const creds = require("../../fixtures/userCreds.json");
+const leavePeriodTypes = require("../../fixtures/leavePeriodTypes.json");
 
 describe("Смоук тест Admin", () => {
     beforeEach(() => {
@@ -11,10 +13,10 @@ describe("Смоук тест Admin", () => {
     });
 
     describe("Авторизация Admin", () => {
-        let userCreds = creds_from_file.admin;
+        let userCreds = creds.admin;
         let suitLogin = new SuitLogin();
 
-        it.only("Вход в систему Admin", () => {
+        it("Вход в систему Admin", () => {
             //логин через UI
             suitLogin.doLoginUserAndCheckVisibleElems(userCreds).doNavigate();
         });
@@ -33,9 +35,12 @@ describe("Смоук тест Admin", () => {
     });
 
     describe("3.1.2 Отсутствия Admin", () => {
-        let userCreds = creds_from_file.admin;
+        let userCreds = creds.admin;
         let suitLaborReports = new SuiteLaborReports();
         let token;
+        let startDate = helpers.calculateLeavePeriodStartDateYYYYMMDD();
+        let endDate = helpers.calculateLeavePeriodEndDateYYYYMMDD();
+
         before(() => {
             localStorage.setItem("sut/onboardingStatus", '{"LaborCostsOnboardingFinished":true}');
             // API.doLoginAndSaveUserInfoAndToken(userCreds).then(() => {
@@ -56,23 +61,48 @@ describe("Смоук тест Admin", () => {
         });
 
         it("3.1.2.1. Добавление больничного со страницы трудозатрат.A", () => {
-            suitLaborReports.addSickPeriod();
+            suitLaborReports.addLeavePeriod(leavePeriodTypes.sickPeriodType);
         });
 
         it("3.1.2.1. Добавление ежегодного отпуска со страницы трудозатрат.A", () => {
-            suitLaborReports.addPlannedLeavePeriod();
+            suitLaborReports.addLeavePeriod(leavePeriodTypes.vacationPeriodType);
         });
 
         it("3.1.2.1. Добавление административного отпуска со страницы трудозатрат.A", () => {
-            suitLaborReports.addAdministrativeLeavePeriod();
+            suitLaborReports.addLeavePeriod(leavePeriodTypes.administrativePeriodType);
         });
         it("3.1.2.1. Добавление декретного отпуска со страницы трудозатрат.A", () => {
-            suitLaborReports.addMaternityPeriod();
+            suitLaborReports.addLeavePeriod(leavePeriodTypes.maternityPeriodType);
         });
 
-        it("3.1.2.1. Добавление больничного со страницы трудозатрат.A", () => {
-            //API.addLeavePeriod(Cypress.env("userAuthInfoFromPOST"), "SIC");
-            //suitLaborReports.pageLaborReports.doNavigate();
+        it("3.1.2.1. Удаление больничного со страницы трудозатрат.A", () => {
+            let periodType = leavePeriodTypes.sickPeriodType;
+            API.addLeavePeriod(Cypress.env("userAuthInfoFromPOST"), periodType, startDate, endDate);
+            suitLaborReports.pageLaborReports.doNavigate();
+
+            suitLaborReports.deleteMostRecentLeavePeriod(periodType);
+        });
+        it("3.1.2.1. Удаление ежегодного отпуска со страницы трудозатрат.A", () => {
+            let periodType = leavePeriodTypes.vacationPeriodType;
+            API.addLeavePeriod(Cypress.env("userAuthInfoFromPOST"), periodType, startDate, endDate);
+            suitLaborReports.pageLaborReports.doNavigate();
+
+            console.log(periodType);
+            suitLaborReports.deleteMostRecentLeavePeriod(periodType);
+        });
+        it("3.1.2.1. Удаление административного отпуска со страницы трудозатрат.A", () => {
+            let periodType = leavePeriodTypes.administrativePeriodType;
+            API.addLeavePeriod(Cypress.env("userAuthInfoFromPOST"), periodType, startDate, endDate);
+            suitLaborReports.pageLaborReports.doNavigate();
+
+            suitLaborReports.deleteMostRecentLeavePeriod(periodType);
+        });
+        it("3.1.2.1. Удаление декретного отпуска со страницы трудозатрат.A", () => {
+            let periodType = leavePeriodTypes.maternityPeriodType;
+            API.addLeavePeriod(Cypress.env("userAuthInfoFromPOST"), periodType, startDate, endDate);
+            suitLaborReports.pageLaborReports.doNavigate();
+
+            suitLaborReports.deleteMostRecentLeavePeriod(periodType);
         });
     });
 });

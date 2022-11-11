@@ -3,7 +3,8 @@ import Sidebar from "../Sidebar.js";
 import DroverAddLeavePeriod from "./DroverAddLeavePeriod.js";
 
 //локаторы страницы
-const ADD_ICON = "[data-testid='AddIcon']",
+const ADD_ICON = '[data-testid="AddIcon"]',
+    DELETE_ICON = '[data-testid="ClearIcon"]',
     ARROW_DROP_DOWN_ID = "[data-testid='ArrowDropDownIcon']",
     CHEVRON_LEFT_ID = "[data-testid='ChevronLeftIcon']",
     CHEVRON_RIGHT_ID = "[data-testid='ChevronRightIcon']",
@@ -31,7 +32,10 @@ const ADD_ICON = "[data-testid='AddIcon']",
     TABLE_LABOR_REPORTS_TOTAL_ROW_CELLS =
         'div[row-index="b-0"][row-id="b-0"] div[class~="cell-dates"][role="gridcell"]',
     //элементы таблицы Отсутствия
-    TABLE_LEAVE_PERIODS_LAST_LEAVE_TYPE_CELL = 'div[role="gridcell"][col-id="0"]';
+    TABLE_LEAVE_PERIODS_CELL_LAST_LEAVE_TYPE = 'div[role="gridcell"][col-id="0"]',
+    TABLE_LEAVE_PERIODS_BTN_DELETE_LAST_LEAVE_PERIOD =
+        'div[role="gridcell"][col-id="3"] [data-testid="ClearIcon"]',
+    MODAL_DELETE_LEAVE_PERIOD_BTN_DELETE = 'button[class~="onboaridng__comfirm-save-button"]';
 
 export default class PageLaborReports {
     constructor() {
@@ -85,8 +89,14 @@ export default class PageLaborReports {
         return cy.get(TABLE_LEAVE_PERIODS);
     }
     //таблица отсутствий
-    getTableLeavePeriodsFirstLeaveTypeCell() {
-        return cy.get(TABLE_LEAVE_PERIODS_LAST_LEAVE_TYPE_CELL);
+    getTableLeavePeriodsCellFirstLeavePeriodType() {
+        return cy.get(TABLE_LEAVE_PERIODS_CELL_LAST_LEAVE_TYPE);
+    }
+    getTableLeavePeriodsBtnDeleteFirstPeriod() {
+        return cy.get(TABLE_LEAVE_PERIODS_BTN_DELETE_LAST_LEAVE_PERIOD);
+    }
+    getModalDeleteLeavePeriodBtnDelete() {
+        return cy.get(MODAL_DELETE_LEAVE_PERIOD_BTN_DELETE);
     }
 
     //действия на странице
@@ -142,5 +152,9 @@ export default class PageLaborReports {
         this.menuAddLeavePeriod.contains(dropdownAddLeavePerionItem).click();
 
         return this.droverAddLeavePeriod.setTitle(dropdownAddLeavePerionItem);
+    }
+    doDeleteLastLeavePeriod() {
+        this.getTableLeavePeriodsBtnDeleteFirstPeriod().click();
+        this.getModalDeleteLeavePeriodBtnDelete().click();
     }
 }

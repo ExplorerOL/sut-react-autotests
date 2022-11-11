@@ -68,16 +68,14 @@ export function deleteAllLeavePeriods(userInfo) {
     });
 }
 
-export function addLeavePeriod(userInfo, leavePeriodType) {
-    let startDate = helpers.calculateLeavePeriodStartDateForTyping();
-    let endDate = helpers.calculateLeavePeriodEndDateForTyping();
+export function addLeavePeriod(userInfo, leavePeriodType, startDate, endDate) {
     return cy.request({
         method: "POST",
         url: "/api/leave-periods/",
         body: {
-            reason: "SIC",
-            startDate: "2022-11-02",
-            endDate: "2022-11-11",
+            reason: leavePeriodType,
+            startDate: startDate,
+            endDate: endDate,
             userId: userInfo.user.id,
         },
     });
