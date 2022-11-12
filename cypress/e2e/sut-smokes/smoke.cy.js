@@ -7,21 +7,23 @@ import * as helpers from "../../support/helpers.js";
 const creds = require("../../fixtures/userCreds.json");
 const leavePeriodTypes = require("../../fixtures/leavePeriodTypes.json");
 
-describe("Смоук тест Admin", () => {
+let userFromEnv = Cypress.env("userForTest");
+let userCreds = creds[userFromEnv];
+
+describe("Смоук тест " + userFromEnv, () => {
     beforeEach(() => {
         localStorage.setItem("sut/onboardingStatus", '{"LaborCostsOnboardingFinished":true}');
     });
 
-    describe("Авторизация Admin", () => {
-        let userCreds = creds.admin;
+    describe("Авторизация " + userFromEnv, () => {
         let suitLogin = new SuitLogin();
 
-        it("Вход в систему Admin", () => {
+        it("Вход в систему " + userFromEnv, function () {
             //логин через UI
             suitLogin.doLoginUserAndCheckVisibleElems(userCreds).doNavigate();
         });
 
-        it("Выход из системы Admin", () => {
+        it("Выход из системы " + userFromEnv, () => {
             //логин через API
             API.doLogin(userCreds).then((POSTResponseBody) => {
                 console.log(POSTResponseBody);
@@ -34,8 +36,8 @@ describe("Смоук тест Admin", () => {
         });
     });
 
-    describe("3.1.2 Отсутствия Admin", () => {
-        let userCreds = creds.admin;
+    describe("3.1.2 Отсутствия " + userFromEnv, () => {
+        //let userCreds = creds.admin;
         let suitLaborReports = new SuiteLaborReports();
         let token;
         let startDate = helpers.calculateLeavePeriodStartDateYYYYMMDD();
@@ -51,55 +53,61 @@ describe("Смоук тест Admin", () => {
                     API.saveUserInfoAndSetCookies(POSTResponseBody);
                 })
                 .then(() => {
-                    token = Cypress.env("userAuthInfoFromPOST").token;
+                    token = Cypress.env("userAuthInfoByAP").token;
                 });
         });
 
         beforeEach(() => {
             cy.setCookie("auth_token", token);
-            API.deleteAllLeavePeriods(Cypress.env("userAuthInfoFromPOST"));
+            API.deleteAllLeavePeriods(Cypress.env("userAuthInfoByAP"));
         });
 
-        it("3.1.2.1. Добавление больничного со страницы трудозатрат.A", () => {
+        it("3.1.2.1. Добавление больничного со страницы трудозатрат " + userFromEnv, () => {
             suitLaborReports.addLeavePeriod(leavePeriodTypes.sickPeriodType);
         });
 
-        it("3.1.2.1. Добавление ежегодного отпуска со страницы трудозатрат.A", () => {
+        it("3.1.2.1. Добавление ежегодного отпуска со страницы трудозатрат " + userFromEnv, () => {
             suitLaborReports.addLeavePeriod(leavePeriodTypes.vacationPeriodType);
         });
 
-        it("3.1.2.1. Добавление административного отпуска со страницы трудозатрат.A", () => {
-            suitLaborReports.addLeavePeriod(leavePeriodTypes.administrativePeriodType);
-        });
-        it("3.1.2.1. Добавление декретного отпуска со страницы трудозатрат.A", () => {
+        it(
+            "3.1.2.1. Добавление административного отпуска со страницы трудозатрат " + userFromEnv,
+            () => {
+                suitLaborReports.addLeavePeriod(leavePeriodTypes.administrativePeriodType);
+            }
+        );
+        it("3.1.2.1. Добавление декретного отпуска со страницы трудозатрат " + userFromEnv, () => {
             suitLaborReports.addLeavePeriod(leavePeriodTypes.maternityPeriodType);
         });
 
-        it("3.1.2.1. Удаление больничного со страницы трудозатрат.A", () => {
+        it("3.1.2.1. Удаление больничного со страницы трудозатрат " + userFromEnv, () => {
             let periodType = leavePeriodTypes.sickPeriodType;
-            API.addLeavePeriod(Cypress.env("userAuthInfoFromPOST"), periodType, startDate, endDate);
+            API.addLeavePeriod(Cypress.env("userAuthInfoByAP"), periodType, startDate, endDate);
             suitLaborReports.pageLaborReports.doNavigate();
 
             suitLaborReports.deleteMostRecentLeavePeriod(periodType);
         });
-        it("3.1.2.1. Удаление ежегодного отпуска со страницы трудозатрат.A", () => {
+        it("3.1.2.1. Удаление ежегодного отпуска со страницы трудозатрат " + userFromEnv, () => {
             let periodType = leavePeriodTypes.vacationPeriodType;
-            API.addLeavePeriod(Cypress.env("userAuthInfoFromPOST"), periodType, startDate, endDate);
+            API.addLeavePeriod(Cypress.env("userAuthInfoByAP"), periodType, startDate, endDate);
             suitLaborReports.pageLaborReports.doNavigate();
 
             console.log(periodType);
             suitLaborReports.deleteMostRecentLeavePeriod(periodType);
         });
-        it("3.1.2.1. Удаление административного отпуска со страницы трудозатрат.A", () => {
-            let periodType = leavePeriodTypes.administrativePeriodType;
-            API.addLeavePeriod(Cypress.env("userAuthInfoFromPOST"), periodType, startDate, endDate);
-            suitLaborReports.pageLaborReports.doNavigate();
+        it(
+            "3.1.2.1. Удаление административного отпуска со страницы трудозатрат " + userFromEnv,
+            () => {
+                let periodType = leavePeriodTypes.administrativePeriodType;
+                API.addLeavePeriod(Cypress.env("userAuthInfoByAP"), periodType, startDate, endDate);
+                suitLaborReports.pageLaborReports.doNavigate();
 
-            suitLaborReports.deleteMostRecentLeavePeriod(periodType);
-        });
-        it("3.1.2.1. Удаление декретного отпуска со страницы трудозатрат.A", () => {
+                suitLaborReports.deleteMostRecentLeavePeriod(periodType);
+            }
+        );
+        it("3.1.2.1. Удаление декретного отпуска со страницы трудозатрат " + userFromEnv, () => {
             let periodType = leavePeriodTypes.maternityPeriodType;
-            API.addLeavePeriod(Cypress.env("userAuthInfoFromPOST"), periodType, startDate, endDate);
+            API.addLeavePeriod(Cypress.env("userAuthInfoByAP"), periodType, startDate, endDate);
             suitLaborReports.pageLaborReports.doNavigate();
 
             suitLaborReports.deleteMostRecentLeavePeriod(periodType);
