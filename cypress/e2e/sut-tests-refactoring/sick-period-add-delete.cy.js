@@ -5,7 +5,7 @@ import Sidebar from "../../sut-pages/sidebar";
 import PageLogin from "../../sut-pages/pageLogin";
 
 //файл с набором валидных учетных записей
-const creds_from_file = require("../../fixtures/userCreds.json");
+const creds_from_file = require("../../fixtures/validUserCreds");
 
 describe("Добавление/удаление больничного листа", () => {
     beforeEach(() => {

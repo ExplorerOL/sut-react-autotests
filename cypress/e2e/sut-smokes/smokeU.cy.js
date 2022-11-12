@@ -3,7 +3,7 @@ import SuiteLaborReports from "../../sutTestSuites/SuiteLaborReports.js";
 import * as API from "../../support/API/apiFunctions";
 
 //файл с набором валидных учетных записей
-const creds_from_file = require("../../fixtures/userCreds.json");
+const creds_from_file = require("../../fixtures/validUserCreds");
 
 describe("Смоук тест User", () => {
     beforeEach(() => {

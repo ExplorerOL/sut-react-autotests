@@ -2,7 +2,7 @@ import SuitLogin from "../../sutTestSuites/suiteLogin.js";
 import * as API from "../../support/API/apiFunctions";
 
 //файл с набором валидных учетных записей
-const creds_from_file = require("../../fixtures/userCreds.json");
+const creds_from_file = require("../../fixtures/validUserCreds");
 
 describe("Тесты авторизации пользователей", () => {
     beforeEach(() => {

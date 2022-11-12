@@ -4,7 +4,7 @@ import * as API from "../../support/API/apiFunctions";
 import * as helpers from "../../support/helpers.js";
 
 //файл с набором валидных учетных записей
-const creds = require("../../fixtures/userCreds.json");
+const creds = require("../../fixtures/validUserCreds");
 const leavePeriodTypes = require("../../fixtures/leavePeriodTypes.json");
 
 let userFromEnv = Cypress.env("userForTest");

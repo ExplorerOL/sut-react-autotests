@@ -1,7 +1,7 @@
 import TestAuth from "../../sut-test-suites/authorizationSuite.js";
 
 //файл с набором валидных учетных записей
-const creds_from_file = require("../../fixtures/userCreds.json");
+const creds_from_file = require("../../fixtures/validUserCreds");
 
 describe("Смоук тест Admin", () => {
     beforeEach(() => {
