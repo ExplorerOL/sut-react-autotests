@@ -1,4 +1,14 @@
 {
+    "user_empty_login": {
+        "username": "",
+        "password": "password",
+        "sysRole": "user"
+    },
+    "user_empty_password": {
+        "username": "user",
+        "password": "",
+        "sysRole": "user"
+    },
     "wrong_login_user": {
         "username": "wronguser!@56 5*(^",
         "password": "password",
