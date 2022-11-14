@@ -1,11 +1,9 @@
 Cache
 node_modules
 cypress/e2e/experimental
-cypress/e2e/sut-tests
 cypress/downloads
 cypress/videos
 cypress/screenshots
 package-lock.json
-cypress.config.js
+cypress.env.json
 package.json
-cypress/fixtures/userCreds.json
