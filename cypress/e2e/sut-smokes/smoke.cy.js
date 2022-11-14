@@ -7,6 +7,8 @@ import * as helpers from "../../support/helpers.js";
 const creds = require("../../fixtures/validUserCreds");
 const leavePeriodTypes = require("../../fixtures/leavePeriodTypes.json");
 
+//прохождение тестов под пользователями, которые заданы в окружении
+//ALL = все пользователи
 for (let nameOfUserObj in creds) {
     let userCreds = creds[nameOfUserObj];
     if (Cypress.env("userForTest") != "ALL" && nameOfUserObj != Cypress.env("userForTest")) {
@@ -15,9 +17,11 @@ for (let nameOfUserObj in creds) {
 
     describe("Смоук тест " + nameOfUserObj, () => {
         beforeEach(() => {
+            //отмена прохождения обучения
             localStorage.setItem("sut/onboardingStatus", '{"LaborCostsOnboardingFinished":true}');
         });
 
+        //тесты авторизации
         describe("Авторизация " + nameOfUserObj, () => {
             let suitLogin = new SuitLogin();
 
@@ -38,18 +42,17 @@ for (let nameOfUserObj in creds) {
             });
         });
 
+        //тесты добавления и удаления отсутствий
         describe("3.1.2 Отсутствия " + nameOfUserObj, () => {
-            //let userCreds = creds.admin;
             let suitLaborReports = new SuiteLaborReports();
             let token;
+            //формирование дат начала и окончания периода отсутсвия
             let startDate = helpers.calculateLeavePeriodStartDateYYYYMMDD();
             let endDate = helpers.calculateLeavePeriodEndDateYYYYMMDD();
 
             before(() => {
+                //авторизация по API
                 localStorage.setItem("sut/onboardingStatus", '{"LaborCostsOnboardingFinished":true}');
-                // API.doLoginAndSaveUserInfoAndToken(userCreds).then(() => {
-                //     token = Cypress.env("userInfoFromPOST").token;
-                // });
                 API.doLogin(userCreds)
                     .then((POSTResponseBody) => {
                         API.saveUserInfoAndSetCookies(POSTResponseBody);
@@ -60,7 +63,9 @@ for (let nameOfUserObj in creds) {
             });
 
             beforeEach(() => {
+                //сохранение токена в кукис
                 cy.setCookie("auth_token", token);
+                //удаление всех периодов отсутствия
                 API.deleteAllLeavePeriods(Cypress.env("userAuthInfoByAPI"));
             });
 
@@ -80,30 +85,34 @@ for (let nameOfUserObj in creds) {
             });
 
             it("3.1.2.1. Удаление больничного со страницы трудозатрат " + nameOfUserObj, () => {
+                //получение типа отсутствия из фикстуры
                 let periodType = leavePeriodTypes.sickPeriodType;
+                //добавление периода отсутствия через API
                 API.addLeavePeriod(Cypress.env("userAuthInfoByAPI"), periodType, startDate, endDate);
-                suitLaborReports.pageLaborReports.doNavigate();
 
                 suitLaborReports.deleteMostRecentLeavePeriod(periodType);
             });
             it("3.1.2.1. Удаление ежегодного отпуска со страницы трудозатрат " + nameOfUserObj, () => {
+                //получение типа отсутствия из фикстуры
                 let periodType = leavePeriodTypes.vacationPeriodType;
+                //добавление периода отсутствия через API
                 API.addLeavePeriod(Cypress.env("userAuthInfoByAPI"), periodType, startDate, endDate);
-                suitLaborReports.pageLaborReports.doNavigate();
 
                 suitLaborReports.deleteMostRecentLeavePeriod(periodType);
             });
             it("3.1.2.1. Удаление административного отпуска со страницы трудозатрат " + nameOfUserObj, () => {
+                //получение типа отсутствия из фикстуры
                 let periodType = leavePeriodTypes.administrativePeriodType;
+                //добавление периода отсутствия через API
                 API.addLeavePeriod(Cypress.env("userAuthInfoByAPI"), periodType, startDate, endDate);
-                suitLaborReports.pageLaborReports.doNavigate();
 
                 suitLaborReports.deleteMostRecentLeavePeriod(periodType);
             });
             it("3.1.2.1. Удаление декретного отпуска со страницы трудозатрат " + nameOfUserObj, () => {
+                //получение типа отсутствия из фикстуры
                 let periodType = leavePeriodTypes.maternityPeriodType;
+                //добавление периода отсутствия через API
                 API.addLeavePeriod(Cypress.env("userAuthInfoByAPI"), periodType, startDate, endDate);
-                suitLaborReports.pageLaborReports.doNavigate();
 
                 suitLaborReports.deleteMostRecentLeavePeriod(periodType);
             });

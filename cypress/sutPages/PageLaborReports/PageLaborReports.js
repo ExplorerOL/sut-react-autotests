@@ -23,18 +23,15 @@ const ADD_ICON = '[data-testid="AddIcon"]',
     DROPDOWN_LEAVE_PEARIODS_ITEM_MATERNITY_PERIOD_TITLE = "Декретный отпуск",
     //элементы таблицы Трудозатраты
     TABLE_LABOR_REPORTS_ROWS_WITH_PROJECTS = 'div[class~="ag-row-first"][row-id="row-group-0"]',
-    TABLE_LABOR_REPORTS_ROW_TOTAL =
-        'div[class~="ag-floating-bottom-viewport"][role="presentation"]',
+    TABLE_LABOR_REPORTS_ROW_TOTAL = 'div[class~="ag-floating-bottom-viewport"][role="presentation"]',
     TABLE_LABOR_REPORTS_FIRST_ROW_1DAY_CELL =
         'div[class~="ag-row-first"][row-id="row-group-0"] div[class~="ag-cell-value"][role="gridcell"][aria-colindex="3"]',
-    TABLE_LABOR_REPORTS_FIRST_PRJ_ROW_CELLS =
-        'div[row-id="row-group-0"] div[class~="cell-dates"][role="gridcell"]',
+    TABLE_LABOR_REPORTS_FIRST_PRJ_ROW_CELLS = 'div[row-id="row-group-0"] div[class~="cell-dates"][role="gridcell"]',
     TABLE_LABOR_REPORTS_TOTAL_ROW_CELLS =
         'div[row-index="b-0"][row-id="b-0"] div[class~="cell-dates"][role="gridcell"]',
     //элементы таблицы Отсутствия
     TABLE_LEAVE_PERIODS_CELL_LAST_LEAVE_TYPE = 'div[role="gridcell"][col-id="0"]',
-    TABLE_LEAVE_PERIODS_BTN_DELETE_LAST_LEAVE_PERIOD =
-        'div[role="gridcell"][col-id="3"] [data-testid="ClearIcon"]',
+    TABLE_LEAVE_PERIODS_BTN_DELETE_LAST_LEAVE_PERIOD = 'div[role="gridcell"][col-id="3"] [data-testid="ClearIcon"]',
     MODAL_DELETE_LEAVE_PERIOD_BTN_DELETE = 'button[class~="onboaridng__comfirm-save-button"]';
 
 export default class PageLaborReports {
@@ -102,22 +99,20 @@ export default class PageLaborReports {
     //действия на странице
     //перейти на страницу
     doNavigate() {
-        cy.intercept("/api/leave-periods*").as("getPeriods");
-        cy.intercept("/api/labor-reports/**/*").as("getLaborInfo");
+        cy.intercept("/api/leave-periods*").as("APIgetLeavePeriods");
+        cy.intercept("/api/labor-reports/**/*").as("APIgetLaborReports");
         cy.visit("/");
         this.header.getBtnAuthUser().should("exist");
         return this;
     }
-    doWaitForApiResponse() {
-        // //cy.intercept('/api/leave-periods').as('getLeavePeriods');
-        // cy.intercept('/api/labor-reports/**').as('getLaborReports');
-        // //cy.wait('@getLeavePeriods');
-        // cy.wait('@getLaborReports');
-        //ожидание ответов на api
-        //cy.visit("/");
-        cy.wait(["@getPeriods", "@getLaborInfo"]).spread(
-            (getUsers, getActivities, getComments) => {}
-        );
+    doWaitForAPILeavePeriodsANDLaborReportsResponse() {
+        cy.wait(["@APIgetLeavePeriods", "@APIgetLaborReports"]);
+    }
+    doWaitForAPILeavePeriodsResponse() {
+        cy.wait("@APIgetLeavePeriods");
+    }
+    doWaitForAPILaborReportsResponse() {
+        cy.wait("@APIgetLaborReports");
     }
     //открыть меню добавления прериода отсутствия
     doOpenMenuAddLeavePeriod() {
@@ -139,8 +134,7 @@ export default class PageLaborReports {
                 break;
             }
             case "ADM": {
-                dropdownAddLeavePerionItem =
-                    DROPDOWN_LEAVE_PEARIODS_ITEM_ADMINISTRAVIVE_PERIOD_TITLE;
+                dropdownAddLeavePerionItem = DROPDOWN_LEAVE_PEARIODS_ITEM_ADMINISTRAVIVE_PERIOD_TITLE;
                 break;
             }
             case "MAT": {
@@ -156,5 +150,6 @@ export default class PageLaborReports {
     doDeleteLastLeavePeriod() {
         this.getTableLeavePeriodsBtnDeleteFirstPeriod().click();
         this.getModalDeleteLeavePeriodBtnDelete().click();
+        return this;
     }
 }

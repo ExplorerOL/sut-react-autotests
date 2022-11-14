@@ -14,7 +14,7 @@ export default class SuiteLaborReports {
     //добавить Больничный отпуск
     addLeavePeriod(leavePeriodType) {
         //проверяем, что больничные не проставлены
-        this.pageLaborReports.doNavigate().doWaitForApiResponse();
+        this.pageLaborReports.doNavigate().doWaitForAPILeavePeriodsANDLaborReportsResponse();
         this.checkLeavePeriodNotPresent();
 
         this.pageLaborReports.doOpenDroverAddLeavePeriod(leavePeriodType);
@@ -22,12 +22,14 @@ export default class SuiteLaborReports {
             .doSelectDayOfCurrentMonthFromDatapicker(this.startLeaveDay)
             .doTypeEndDate(this.endLeaveDate)
             .doClickBtnSave();
+        this.pageLaborReports.doWaitForAPILeavePeriodsResponse();
         this.checkLeavePeriodExists(helpers.leavePeriodTextToCheck(leavePeriodType));
     }
     //удалить последний отпуск
     deleteMostRecentLeavePeriod(leavePeriodType) {
+        this.pageLaborReports.doNavigate().doWaitForAPILeavePeriodsANDLaborReportsResponse();
         this.checkLeavePeriodExists(helpers.leavePeriodTextToCheck(leavePeriodType));
-        this.pageLaborReports.doDeleteLastLeavePeriod();
+        this.pageLaborReports.doDeleteLastLeavePeriod().doWaitForAPILeavePeriodsResponse();
         this.checkLeavePeriodNotPresent();
     }
 
@@ -40,12 +42,8 @@ export default class SuiteLaborReports {
     }
     checkLeavePeriodExists(referenceTextsObj) {
         //this.getTableLaborReportRowsWithProjects().children().contains('[role="gridcell"]', "Б").should('not.exist');
-        this.pageLaborReports
-            .getTableLaborReportFirstPrjRowCells()
-            .should("have.text", referenceTextsObj.cellsText);
-        this.pageLaborReports
-            .getTableLaborReportRowTotalCells()
-            .should("have.text", referenceTextsObj.cellsText);
+        this.pageLaborReports.getTableLaborReportFirstPrjRowCells().should("have.text", referenceTextsObj.cellsText);
+        this.pageLaborReports.getTableLaborReportRowTotalCells().should("have.text", referenceTextsObj.cellsText);
 
         this.pageLaborReports
             .getTableLeavePeriodsCellFirstLeavePeriodType()

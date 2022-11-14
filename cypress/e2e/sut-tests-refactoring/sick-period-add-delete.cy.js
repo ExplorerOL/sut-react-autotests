@@ -25,11 +25,9 @@ describe("Добавление/удаление больничного лист�
 
             cy.intercept("/api/leave-periods*").as("getPeriods");
             cy.intercept("/api/labor-reports/**").as("getLaborInfo");
-            cy.wait(["@getPeriods", "@getLaborInfo"]).spread(
-                (getUsers, getActivities, getComments) => {
-                    // each interception is now an individual argument
-                }
-            );
+            cy.wait(["@APIgetLeavePeriods", "@APIgetLaborReports"]).spread((getUsers, getActivities, getComments) => {
+                // each interception is now an individual argument
+            });
 
             //проверка, что больничных нет в таблицы
             pageLaborReports.getLeavePeriodsList().should("not.contain", "Больничный");
@@ -44,14 +42,10 @@ describe("Добавление/удаление больничного лист�
             cy.get(".RHiyQ > .sc-gsnTZi").contains("Больничный").should("exist");
 
             //выбор даты больничного
-            cy.get(
-                ':nth-child(2) > .sc-gicCDI > .sc-fmrZth > .sc-papXJ > [data-testid="CalendarIcon"]'
-            ).click();
+            cy.get(':nth-child(2) > .sc-gicCDI > .sc-fmrZth > .sc-papXJ > [data-testid="CalendarIcon"]').click();
             cy.get(":nth-child(3) > :nth-child(1) > .sc-papXJ").click();
 
-            cy.get(
-                ':nth-child(2) > .sc-gicCDI > .sc-fmrZth > .sc-papXJ > [data-testid="CalendarIcon"]'
-            ).click();
+            cy.get(':nth-child(2) > .sc-gicCDI > .sc-fmrZth > .sc-papXJ > [data-testid="CalendarIcon"]').click();
             cy.get(":nth-child(4) > :nth-child(7) > .sc-papXJ").last().click();
 
             //сохранение больничного

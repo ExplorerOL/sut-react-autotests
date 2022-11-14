@@ -22,7 +22,7 @@ describe("Тест авторизации", () => {
             //ожидание ответов на api
             cy.intercept("/api/leave-periods*").as("getPeriods");
             cy.intercept("/api/labor-reports/**").as("getLaborInfo");
-            cy.wait(["@getPeriods", "@getLaborInfo"]).spread(
+            cy.wait(["@APIgetLeavePeriods", "@APIgetLaborReports"]).spread(
                 (getUsers, getActivities, getComments) => {}
             );
             switch (uname) {
