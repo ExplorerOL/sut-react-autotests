@@ -1,4 +1,4 @@
-import * as helpers from "../../support/helpers.js";
+import * as helpers from "../helpers.js";
 
 //логина через API
 export function doLogin(userCreds) {

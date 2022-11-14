@@ -1,6 +1,6 @@
 import SuitLogin from "../../sutTestSuites/SuiteLogin.js";
 import SuiteLaborReports from "../../sutTestSuites/SuiteLaborReports.js";
-import * as API from "../../support/API/apiFunctions";
+import * as API from "../../support/API/APIFunctions";
 import * as helpers from "../../support/helpers.js";
 
 //файл с набором валидных учетных записей
