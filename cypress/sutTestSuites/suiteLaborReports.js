@@ -49,4 +49,16 @@ export default class SuiteLaborReports {
             .getTableLeavePeriodsCellFirstLeavePeriodType()
             .should("have.text", referenceTextsObj.periodName);
     }
+    //проверка элементов дровера добавления отутствий
+    checkDroverAddLeavePeriodElemsPresence() {
+        this.getTitle().should('exist');
+        this.getDroverText().should('exist');
+        this.getLblInputStartData().should('exist');
+        this.getLblInputEndData().should('exist');
+        this.getInputStartDate().should('exist');
+        this.getInputEndDate().should('exist');
+        this.getDatapickerStartDate().should('exist');
+        this.getDatapickerEndDate().should('exist');
+        return this;
+    }
 }
