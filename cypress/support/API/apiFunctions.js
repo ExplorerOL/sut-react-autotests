@@ -16,7 +16,7 @@ export function saveUserInfoAndSetCookies(POSTResponseBody) {
     expect(POSTResponseBody.status).to.eq(200);
     expect(POSTResponseBody.body.token).to.not.be.null;
     cy.setCookie("auth_token", POSTResponseBody.body.token);
-    Cypress.env("userAuthInfoByAP", POSTResponseBody.body);
+    Cypress.env("userAuthInfoByAPI", POSTResponseBody.body);
 }
 
 //выход из системы API

@@ -45,13 +45,13 @@ describe("Смоук тест User", () => {
                     API.saveUserInfoAndSetCookies(POSTResponseBody);
                 })
                 .then(() => {
-                    token = Cypress.env("userAuthInfoByAP").token;
+                    token = Cypress.env("userAuthInfoByAPI").token;
                 });
         });
 
         beforeEach(() => {
             cy.setCookie("auth_token", token);
-            API.deleteAllLeavePeriods(Cypress.env("userAuthInfoByAP"));
+            API.deleteAllLeavePeriods(Cypress.env("userAuthInfoByAPI"));
         });
 
         it.only("3.1.2.1. Добавление больничного со страницы трудозатрат.A", () => {
@@ -70,7 +70,7 @@ describe("Смоук тест User", () => {
         });
 
         it.only("3.1.2.1. Удаление больничного со страницы трудозатрат.A", () => {
-            API.addLeavePeriod(Cypress.env("userAuthInfoByAP"), "SIC");
+            API.addLeavePeriod(Cypress.env("userAuthInfoByAPI"), "SIC");
             suitLaborReports.pageLaborReports.doNavigate();
         });
     });
