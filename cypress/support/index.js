@@ -19,7 +19,6 @@ moment.locale('ru');
 import './commands';
 import * as HELPERS from './helpers';
 
-import 'cypress-mochawesome-reporter/register';
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 

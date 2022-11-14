@@ -1,7 +1,5 @@
-//import PageLogin from "../sutPages/pageLogin";
 import PageLaborReport from "../sutPages/PageLaborReports/PageLaborReports";
 import * as helpers from "../support/helpers.js";
-//import DroverAddLeavePeriod from "../sutPages/PageLaborReport/DroverAddLeavePeriod";
 
 export default class SuiteLaborReports {
     constructor() {

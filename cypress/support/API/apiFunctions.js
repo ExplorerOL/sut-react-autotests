@@ -1,4 +1,3 @@
-import * as helpers from "../helpers.js";
 
 //логин
 export function doLogin(userCreds) {
