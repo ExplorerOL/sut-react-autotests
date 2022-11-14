@@ -34,7 +34,9 @@ for (let nameOfUserObj in creds) {
                 //логин через API
                 API.doLogin(userCreds).then((POSTResponseBody) => {
                     API.checkLoginOK(POSTResponseBody);
-                    helpers.saveUserInfoAndSetCookies(POSTResponseBody);
+                    helpers.saveUserInfoAfterAPILogin(POSTResponseBody);
+                    //сохранение токена в кукис
+                    helpers.setTokenInCookies();
                 });
                 suitLogin.pageLaborReports.doNavigate();
 
@@ -57,16 +59,16 @@ for (let nameOfUserObj in creds) {
                 API.doLogin(userCreds)
                     .then((POSTResponseBody) => {
                         API.checkLoginOK(POSTResponseBody);
-                        helpers.saveUserInfoAndSetCookies(POSTResponseBody);
+                        helpers.saveUserInfoAfterAPILogin(POSTResponseBody);
                     })
                     .then(() => {
-                        token = Cypress.env("userAuthInfoByAPI").token;
+
                     });
             });
 
             beforeEach(() => {
                 //сохранение токена в кукис
-                cy.setCookie("auth_token", token);
+                helpers.setTokenInCookies();
                 //удаление всех периодов отсутствия
                 API.deleteAllLeavePeriods(Cypress.env("userAuthInfoByAPI"));
             });
