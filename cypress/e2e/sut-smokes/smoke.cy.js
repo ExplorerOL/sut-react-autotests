@@ -26,7 +26,6 @@ describe("Смоук тест " + userFromEnv, () => {
         it("Выход из системы " + userFromEnv, () => {
             //логин через API
             API.doLogin(userCreds).then((POSTResponseBody) => {
-                console.log(POSTResponseBody);
                 API.saveUserInfoAndSetCookies(POSTResponseBody);
             });
             suitLogin.pageLaborReports.doNavigate();
@@ -70,12 +69,9 @@ describe("Смоук тест " + userFromEnv, () => {
             suitLaborReports.addLeavePeriod(leavePeriodTypes.vacationPeriodType);
         });
 
-        it(
-            "3.1.2.1. Добавление административного отпуска со страницы трудозатрат " + userFromEnv,
-            () => {
-                suitLaborReports.addLeavePeriod(leavePeriodTypes.administrativePeriodType);
-            }
-        );
+        it("3.1.2.1. Добавление административного отпуска со страницы трудозатрат " + userFromEnv, () => {
+            suitLaborReports.addLeavePeriod(leavePeriodTypes.administrativePeriodType);
+        });
         it("3.1.2.1. Добавление декретного отпуска со страницы трудозатрат " + userFromEnv, () => {
             suitLaborReports.addLeavePeriod(leavePeriodTypes.maternityPeriodType);
         });
@@ -92,19 +88,15 @@ describe("Смоук тест " + userFromEnv, () => {
             API.addLeavePeriod(Cypress.env("userAuthInfoByAP"), periodType, startDate, endDate);
             suitLaborReports.pageLaborReports.doNavigate();
 
-            console.log(periodType);
             suitLaborReports.deleteMostRecentLeavePeriod(periodType);
         });
-        it(
-            "3.1.2.1. Удаление административного отпуска со страницы трудозатрат " + userFromEnv,
-            () => {
-                let periodType = leavePeriodTypes.administrativePeriodType;
-                API.addLeavePeriod(Cypress.env("userAuthInfoByAP"), periodType, startDate, endDate);
-                suitLaborReports.pageLaborReports.doNavigate();
+        it("3.1.2.1. Удаление административного отпуска со страницы трудозатрат " + userFromEnv, () => {
+            let periodType = leavePeriodTypes.administrativePeriodType;
+            API.addLeavePeriod(Cypress.env("userAuthInfoByAP"), periodType, startDate, endDate);
+            suitLaborReports.pageLaborReports.doNavigate();
 
-                suitLaborReports.deleteMostRecentLeavePeriod(periodType);
-            }
-        );
+            suitLaborReports.deleteMostRecentLeavePeriod(periodType);
+        });
         it("3.1.2.1. Удаление декретного отпуска со страницы трудозатрат " + userFromEnv, () => {
             let periodType = leavePeriodTypes.maternityPeriodType;
             API.addLeavePeriod(Cypress.env("userAuthInfoByAP"), periodType, startDate, endDate);
