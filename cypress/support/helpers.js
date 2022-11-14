@@ -12,11 +12,9 @@ export function calculateLeavePeriodStartDayForPicking() {
 }
 
 export function calculateLeavePeriodStartDateYYYYMMDD() {
-    //число месяца для начала отсутствия
-    //this.startLeaveDay = 2;
-    //число месяца для конца отсутствия = текущей дате
     let now = new Date();
     //let nowDay = now.getDate() >1 ? ("0" + (now.getDate())).slice(-2) : 2;
+    //число месяца для начала отсутствия пока фиксированное
     let nowDay = "02";
     let nowMonth = ("0" + (now.getMonth() + 1)).slice(-2);
     let nowYear = now.getFullYear();
@@ -25,12 +23,10 @@ export function calculateLeavePeriodStartDateYYYYMMDD() {
 }
 
 export function calculateLeavePeriodEndDateYYYYMMDD() {
-    //число месяца для начала отсутствия
-    //this.startLeaveDay = 2;
-    //число месяца для конца отсутствия = текущей дате
     let now = new Date();
     //let nowDay = now.getDate() >1 ? ("0" + (now.getDate())).slice(-2) : 2;
-    let nowDay = "11";
+    //число месяца для начала отсутствия пока фиксированное
+    let nowDay = "21";
     let nowMonth = ("0" + (now.getMonth() + 1)).slice(-2);
     let nowYear = now.getFullYear();
     let endDate = nowYear + "-" + nowMonth + "-" + nowDay;
@@ -55,7 +51,7 @@ export function calculateLeavePeriodEndDateForTyping() {
     //число месяца для конца отсутствия = текущей дате
     let now = new Date();
     //let nowDay = now.getDate() >1 ? ("0" + (now.getDate())).slice(-2) : 2;
-    let nowDay = "11";
+    let nowDay = "21";
     let nowMonth = ("0" + (now.getMonth() + 1)).slice(-2);
     let nowYear = now.getFullYear();
     let endDate = nowDay + "." + nowMonth + "." + nowYear;
@@ -66,36 +62,27 @@ export function leavePeriodTextToCheck(leavePeriodType) {
     switch (leavePeriodType) {
         case "SIC": {
             return {
-                cellsText: "ББББББББББ",
+                cellsText: "ББББББББББББББББББББ",
                 periodName: "Больничный",
             };
         }
         case "VAC": {
             return {
-                cellsText: "ОтОтОтОтОтОтОтОтОтОт",
+                cellsText: "ОтОтОтОтОтОтОтОтОтОтОтОтОтОтОтОтОтОтОтОт",
                 periodName: "Ежегодный отпуск",
             };
         }
         case "ADM": {
             return {
-                cellsText: "АААААААААА",
+                cellsText: "АААААААААААААААААААА",
                 periodName: "Административный отпуск",
             };
         }
         case "MAT": {
             return {
-                cellsText: "ДДДДДДДДДД",
+                cellsText: "ДДДДДДДДДДДДДДДДДДДД",
                 periodName: "Декретный отпуск",
             };
         }
     }
-}
-export function plannedLeavePeriodCellsText() {
-    return "ОтОтОтОтОтОтОтОтОтОт";
-}
-export function administrativePeriodCellsText() {
-    return "АААААААААА";
-}
-export function maternityPeriodCellsText() {
-    return "ДДДДДДДДДД";
 }
