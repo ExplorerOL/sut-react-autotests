@@ -1,6 +1,6 @@
 import * as helpers from "../helpers.js";
 
-//логина через API
+//логин
 export function doLogin(userCreds) {
     return cy.request({
         method: "POST",
@@ -19,7 +19,7 @@ export function saveUserInfoAndSetCookies(POSTResponseBody) {
     Cypress.env("userAuthInfoByAPI", POSTResponseBody.body);
 }
 
-//выход из системы API
+//выход из системы
 export function doLogout(userData) {
     cy.request({
         method: "DELETE",
@@ -33,7 +33,7 @@ export function doLogout(userData) {
         });
 }
 
-//выход из системы API
+//получение всех периодов отсутствий
 function getAllLeavePeriods(userInfo) {
     return cy.request({
         method: "GET",
@@ -42,6 +42,7 @@ function getAllLeavePeriods(userInfo) {
     });
 }
 
+//удаление всех периодов отсутствий
 export function deleteAllLeavePeriods(userInfo) {
     return getAllLeavePeriods(userInfo).then(function (response) {
         expect(response.status).to.eq(200);
@@ -55,6 +56,7 @@ export function deleteAllLeavePeriods(userInfo) {
     });
 }
 
+//добавление периода отсутствия
 export function addLeavePeriod(userInfo, leavePeriodType, startDate, endDate) {
     return cy.request({
         method: "POST",
