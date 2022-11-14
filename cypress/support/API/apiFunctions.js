@@ -10,12 +10,10 @@ export function doLogin(userCreds) {
         },
     });
 }
-
-export function saveUserInfoAndSetCookies(POSTResponseBody) {
+//проверка успешности логина
+export function checkLoginOK(POSTResponseBody) {
     expect(POSTResponseBody.status).to.eq(200);
     expect(POSTResponseBody.body.token).to.not.be.null;
-    cy.setCookie("auth_token", POSTResponseBody.body.token);
-    Cypress.env("userAuthInfoByAPI", POSTResponseBody.body);
 }
 
 //выход из системы

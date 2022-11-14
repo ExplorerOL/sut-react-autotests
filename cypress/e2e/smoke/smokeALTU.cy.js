@@ -33,7 +33,8 @@ for (let nameOfUserObj in creds) {
             it("Выход из системы " + nameOfUserObj, () => {
                 //логин через API
                 API.doLogin(userCreds).then((POSTResponseBody) => {
-                    API.saveUserInfoAndSetCookies(POSTResponseBody);
+                    API.checkLoginOK(POSTResponseBody);
+                    helpers.saveUserInfoAndSetCookies(POSTResponseBody);
                 });
                 suitLogin.pageLaborReports.doNavigate();
 
@@ -55,7 +56,8 @@ for (let nameOfUserObj in creds) {
                 localStorage.setItem("sut/onboardingStatus", '{"LaborCostsOnboardingFinished":true}');
                 API.doLogin(userCreds)
                     .then((POSTResponseBody) => {
-                        API.saveUserInfoAndSetCookies(POSTResponseBody);
+                        API.checkLoginOK(POSTResponseBody);
+                        helpers.saveUserInfoAndSetCookies(POSTResponseBody);
                     })
                     .then(() => {
                         token = Cypress.env("userAuthInfoByAPI").token;

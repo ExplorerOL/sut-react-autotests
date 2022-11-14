@@ -7,6 +7,11 @@ export function randomChar(num) {
     return text;
 }
 
+export function saveUserInfoAndSetCookies(POSTResponseBody) {
+    cy.setCookie("auth_token", POSTResponseBody.body.token);
+    Cypress.env("userAuthInfoByAPI", POSTResponseBody.body);
+}
+
 export function calculateLeavePeriodStartDayForPicking() {
     return 2;
 }
