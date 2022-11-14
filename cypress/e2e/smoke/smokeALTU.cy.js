@@ -93,7 +93,7 @@ for (let nameOfUserObj in creds) {
                 let periodType = leavePeriodTypes.sickPeriodType;
                 //добавление периода отсутствия через API
                 API.addLeavePeriod(Cypress.env("userAuthInfoByAPI"), periodType, startDate, endDate);
-
+                //удаление периода отсутствия
                 suitLaborReports.deleteMostRecentLeavePeriod(periodType);
             });
             it("3.1.2.1. Удаление ежегодного отпуска со страницы трудозатрат " + nameOfUserObj, () => {
@@ -101,7 +101,7 @@ for (let nameOfUserObj in creds) {
                 let periodType = leavePeriodTypes.vacationPeriodType;
                 //добавление периода отсутствия через API
                 API.addLeavePeriod(Cypress.env("userAuthInfoByAPI"), periodType, startDate, endDate);
-
+                //удаление периода отсутствия
                 suitLaborReports.deleteMostRecentLeavePeriod(periodType);
             });
             it("3.1.2.1. Удаление административного отпуска со страницы трудозатрат " + nameOfUserObj, () => {
@@ -109,7 +109,7 @@ for (let nameOfUserObj in creds) {
                 let periodType = leavePeriodTypes.administrativePeriodType;
                 //добавление периода отсутствия через API
                 API.addLeavePeriod(Cypress.env("userAuthInfoByAPI"), periodType, startDate, endDate);
-
+                //удаление периода отсутствия
                 suitLaborReports.deleteMostRecentLeavePeriod(periodType);
             });
             it("3.1.2.1. Удаление декретного отпуска со страницы трудозатрат " + nameOfUserObj, () => {
@@ -117,7 +117,7 @@ for (let nameOfUserObj in creds) {
                 let periodType = leavePeriodTypes.maternityPeriodType;
                 //добавление периода отсутствия через API
                 API.addLeavePeriod(Cypress.env("userAuthInfoByAPI"), periodType, startDate, endDate);
-
+                //удаление периода отсутствия
                 suitLaborReports.deleteMostRecentLeavePeriod(periodType);
             });
         });
