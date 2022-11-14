@@ -1,5 +1,5 @@
-import PageLogin from "../sutPages/PageLogin";
-import PageLaborReports from "../sutPages/PageLaborReports/PageLaborReports";
+import PageLogin from "../pages/PageLogin";
+import PageLaborReports from "../pages/PageLaborReports/PageLaborReports";
 
 export default class SuitLogin {
     constructor() {

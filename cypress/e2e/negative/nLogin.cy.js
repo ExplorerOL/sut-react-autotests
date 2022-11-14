@@ -1,4 +1,4 @@
-import SuitLogin from "../../sutTestSuites/suiteLogin.js";
+import SuitLogin from "../../testSuites/suiteLogin.js";
 
 //файл с набором валидных учетных записей
 const creds = require("../../fixtures/wrongUserCreds");

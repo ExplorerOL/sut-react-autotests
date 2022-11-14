@@ -1,4 +1,4 @@
-import PageLaborReport from "../sutPages/PageLaborReports/PageLaborReports";
+import PageLaborReport from "../pages/PageLaborReports/PageLaborReports";
 import * as helpers from "../support/helpers.js";
 
 export default class SuiteLaborReports {

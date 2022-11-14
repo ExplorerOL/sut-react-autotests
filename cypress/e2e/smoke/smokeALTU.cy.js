@@ -1,5 +1,5 @@
-import SuitLogin from "../../sutTestSuites/SuiteLogin.js";
-import SuiteLaborReports from "../../sutTestSuites/SuiteLaborReports.js";
+import SuitLogin from "../../testSuites/SuiteLogin.js";
+import SuiteLaborReports from "../../testSuites/SuiteLaborReports.js";
 import * as API from "../../support/API/APIFunctions";
 import * as helpers from "../../support/helpers.js";
 
