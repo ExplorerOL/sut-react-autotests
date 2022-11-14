@@ -22,7 +22,6 @@ describe("Смоук тест User", () => {
         it("Выход из системы User", () => {
             //логин через API
             API.doLogin(userCreds).then((POSTResponseBody) => {
-                console.log(POSTResponseBody);
                 API.saveUserInfoAndSetCookies(POSTResponseBody);
             });
             suitLogin.pageLaborReports.doNavigate();

@@ -33,18 +33,6 @@ export function doLogout(userData) {
         });
 }
 
-export function getUserInfoByToken(userToken) {
-    console.log("---" + toString(userToken));
-    // cy.request({
-    //     method: "GET",
-    //     url: "/api/login/remember-me",
-    //     body: { token: toString(userToken) },
-    // }).then(function (response) {
-    //     //expect(response.status).to.eq(204);
-    //     console.log(response);
-    // });
-}
-
 //выход из системы API
 function getAllLeavePeriods(userInfo) {
     return cy.request({
@@ -57,7 +45,6 @@ function getAllLeavePeriods(userInfo) {
 export function deleteAllLeavePeriods(userInfo) {
     return getAllLeavePeriods(userInfo).then(function (response) {
         expect(response.status).to.eq(200);
-        console.log(response.body);
         response.body.forEach((element) => {
             cy.request({
                 method: "DELETE",

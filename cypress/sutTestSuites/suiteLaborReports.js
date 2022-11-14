@@ -26,7 +26,6 @@ export default class SuiteLaborReports {
     }
     //удалить последний отпуск
     deleteMostRecentLeavePeriod(leavePeriodType) {
-        console.log(leavePeriodType);
         this.checkLeavePeriodExists(helpers.leavePeriodTextToCheck(leavePeriodType));
         this.pageLaborReports.doDeleteLastLeavePeriod();
         this.checkLeavePeriodNotPresent();
