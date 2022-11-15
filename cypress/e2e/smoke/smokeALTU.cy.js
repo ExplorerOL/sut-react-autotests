@@ -61,9 +61,6 @@ for (let nameOfUserObj in creds) {
                         API.checkLoginOK(POSTResponseBody);
                         helpers.saveUserInfoAfterAPILogin(POSTResponseBody);
                     })
-                    .then(() => {
-
-                    });
             });
 
             beforeEach(() => {
