@@ -29,6 +29,9 @@ const ADD_ICON = '[data-testid="AddIcon"]',
     TABLE_LABOR_REPORTS_FIRST_PRJ_ROW_CELLS = 'div[row-id="row-group-0"] div[class~="cell-dates"][role="gridcell"]',
     TABLE_LABOR_REPORTS_TOTAL_ROW_CELLS =
         'div[row-index="b-0"][row-id="b-0"] div[class~="cell-dates"][role="gridcell"]',
+    TABLE_AG_GRID = '[role="grid"]',
+    TABLE_LABOR_REPORTS_DAY1_COLUMN = 'div[class~="ag-cell-value"][aria-colindex="3"]',
+    TABLE_LABOR_REPORTS_DAY22_COLUMN = 'div[class~="ag-cell-value"][aria-colindex="24"]',
     //элементы таблицы Отсутствия
     TABLE_LEAVE_PERIODS_CELL_LAST_LEAVE_TYPE = 'div[role="gridcell"][col-id="0"]',
     TABLE_LEAVE_PERIODS_BTN_DELETE_LAST_LEAVE_PERIOD = 'div[role="gridcell"][col-id="3"] [data-testid="ClearIcon"]',
@@ -77,6 +80,15 @@ export default class PageLaborReports {
     getTableLaborReportRowTotalCells() {
         return cy.get(TABLE_LABOR_REPORTS_TOTAL_ROW_CELLS);
     }
+    //столбец таблицы трудозатрат для дня 1
+    getTableLaborReportsColumnDay1() {
+        return cy.get(TABLE_AG_GRID).first().find(TABLE_LABOR_REPORTS_DAY1_COLUMN);
+    }
+    //столбец таблицы трудозатрат для дня 22
+    getTableLaborReportsColumnDay22() {
+        return cy.get(TABLE_AG_GRID).first().find(TABLE_LABOR_REPORTS_DAY22_COLUMN);
+    }
+
     //название раздела с отсутствиями
     getTableLeavePeriodsTitle() {
         return cy.xpath(TABLE_LEAVE_PERIODS_TITLE);
@@ -96,7 +108,8 @@ export default class PageLaborReports {
         return cy.get(MODAL_DELETE_LEAVE_PERIOD_BTN_DELETE);
     }
 
-    //действия на странице
+
+//действия на странице
     //перейти на страницу
     doNavigate() {
         cy.intercept("/api/leave-periods*").as("APIgetLeavePeriods");
@@ -105,12 +118,15 @@ export default class PageLaborReports {
         this.header.getBtnAuthUser().should("exist");
         return this;
     }
+    //ожидать ответа от API трудозатрат и отсутствий
     doWaitForAPILeavePeriodsANDLaborReportsResponse() {
         cy.wait(["@APIgetLeavePeriods", "@APIgetLaborReports"]);
     }
+    //ожидать ответа от API отсутствий
     doWaitForAPILeavePeriodsResponse() {
         cy.wait("@APIgetLeavePeriods");
     }
+    //ожидать ответа от API трудозатрат
     doWaitForAPILaborReportsResponse() {
         cy.wait("@APIgetLaborReports");
     }
@@ -147,6 +163,7 @@ export default class PageLaborReports {
 
         return this.droverAddLeavePeriod.setTitle(dropdownAddLeavePerionItem);
     }
+    //удалить период отсутствия в самой верхней строке таблицы
     doDeleteLastLeavePeriod() {
         this.getTableLeavePeriodsBtnDeleteFirstPeriod().click();
         this.getModalDeleteLeavePeriodBtnDelete().click();

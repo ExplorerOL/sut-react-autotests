@@ -21,12 +21,12 @@ export default class SuiteLaborReports {
             .doTypeEndDate(this.endLeaveDate)
             .doClickBtnSave();
         this.pageLaborReports.doWaitForAPILeavePeriodsResponse();
-        this.checkLeavePeriodExists(helpers.leavePeriodTextToCheck(leavePeriodType));
+        this.checkLeavePeriodWasAddedCorrectly(helpers.leavePeriodTextToCheck(leavePeriodType));
     }
     //удалить последний отпуск
     deleteMostRecentLeavePeriod(leavePeriodType) {
         this.pageLaborReports.doNavigate().doWaitForAPILeavePeriodsANDLaborReportsResponse();
-        this.checkLeavePeriodExists(helpers.leavePeriodTextToCheck(leavePeriodType));
+        this.checkLeavePeriodWasAddedCorrectly(helpers.leavePeriodTextToCheck(leavePeriodType));
         this.pageLaborReports.doDeleteLastLeavePeriod().doWaitForAPILeavePeriodsResponse();
         this.checkLeavePeriodNotPresent();
     }
@@ -38,10 +38,12 @@ export default class SuiteLaborReports {
 
         this.pageLaborReports.getTableLeavePeriodsCellFirstLeavePeriodType().should("not.exist");
     }
-    checkLeavePeriodExists(referenceTextsObj) {
+    checkLeavePeriodWasAddedCorrectly(referenceTextsObj) {
         //this.getTableLaborReportRowsWithProjects().children().contains('[role="gridcell"]', "Б").should('not.exist');
         this.pageLaborReports.getTableLaborReportFirstPrjRowCells().should("have.text", referenceTextsObj.cellsText);
         this.pageLaborReports.getTableLaborReportRowTotalCells().should("have.text", referenceTextsObj.cellsText);
+        this.pageLaborReports.getTableLaborReportsColumnDay1().should('have.text', "");
+        this.pageLaborReports.getTableLaborReportsColumnDay22().should('have.text', "");
 
         this.pageLaborReports
             .getTableLeavePeriodsCellFirstLeavePeriodType()
