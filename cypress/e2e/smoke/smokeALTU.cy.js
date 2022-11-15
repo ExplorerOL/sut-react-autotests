@@ -8,10 +8,10 @@ const creds = require("../../fixtures/validUserCreds");
 const leavePeriodTypes = require("../../fixtures/leavePeriodTypes.json");
 
 //прохождение тестов под пользователями, которые заданы в окружении
-//ALL = все пользователи
+//all = все пользователи
 for (let nameOfUserObj in creds) {
     let userCreds = creds[nameOfUserObj];
-    if (Cypress.env("userForTest") != "ALL" && nameOfUserObj != Cypress.env("userForTest")) {
+    if (Cypress.env("userForTest") != "all" && nameOfUserObj != Cypress.env("userForTest")) {
         continue;
     }
 
